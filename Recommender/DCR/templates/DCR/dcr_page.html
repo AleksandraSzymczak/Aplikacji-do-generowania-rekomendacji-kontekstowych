@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Differential Context Relaxation Algorytm</title>
+    {% load static %}
+  </head>
+  <body>
+    <h1>Prefiltering</h1>
+    <p>
+      Algorytm zaimplementowany na podstawie artykułów:
+      <br />
+      "Differential Context Relaxation for Context-Aware Travel Recommendation"
+      - Yong Zheng, Robin Burke, and Bamshad Mobasher,
+      <br />
+      "Optimal Feature Selection for Context-Aware Recommendation using
+      Differential Relaxation" - Yong Zheng, Robin Burke, and Bamshad Mobasher
+    </p>
+    <p>
+      <figure>
+        <img src="{% static 'images/wzor_DCR.png' %}" />
+        <figcaption>
+          UBCF+DCR User-based collaborative Filtering recommendation Resnick’s
+          algorithm with Context Relaxation
+        </figcaption>
+      </figure>
+    </p>
+    <ul>
+      {% for context_var in context_list %}
+      <li>{{ context_var }}</li>
+      {% endfor %}
+    </ul>
+    {% if mae %}
+    <p>MAE: {{ mae }}</p>
+    {% endif %} {% if rmse %}
+    <p>RMSE: {{ rmse }}</p>
+    {% endif %} {% if recall_result %}
+    <p>Recall Result: {{ recall_result }}</p>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prefiltering Algorytm</title>
+    {% load static %}
+  </head>
+  <body>
+    <h1>Prefiltering</h1>
+    <h4>
+      Algorytm zaimplementowany na podstawie artykułu "Differential Context
+      Relaxation for Context-Aware Travel Recommendation" - Yong Zheng, Robin
+      Burke, and Bamshad Mobasher
+    </h4>
+    <p>
+      <figure>
+        <img src="{% static 'images/wzor_prefiltering.jpg' %}" />
+        <figcaption>
+          UBCF User-based collaborative Filtering recommendation Resnick’s
+          algorithm
+        </figcaption>
+      </figure>
+    </p>
+    <ul>
+      {% for context_var in context_list %}
+      <li>{{ context_var }}</li>
+      {% endfor %}
+    </ul>
+    {% if mae %}
+    <p>MAE: {{ mae }}</p>
+    {% endif %} {% if rmse %}
+    <p>RMSE: {{ rmse }}</p>
+    {% endif %} {% if recall_result %}
+    <p>Recall Result: {{ recall_result }}</p>
+    {% endif %}
+  </body>
+</html>

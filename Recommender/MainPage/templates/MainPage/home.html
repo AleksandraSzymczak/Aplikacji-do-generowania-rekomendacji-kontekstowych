@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recommender app</title>
+    {% load static %}
+  </head>
+  <body>
+    <h1>Recommender</h1>
+    <h3>Aplikacja do badania i generowania rekomendacji kontekstowych</h3>
+
+    <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <label for="file">Dodaj plik:</label>
+      <input
+        type="file"
+        name="file"
+        id="file"
+        accept=".xlsx, .xls, .csv, .txt"
+      />
+
+      <br />
+
+      <input type="submit" value="Prześlij" />
+    </form>
+    {% if success_message %}
+    <p style="color: green">{{ success_message }}</p>
+    {% endif %}
+    <p>
+      Dostępne formaty danych, które można wprowadzić do systemu
+      rekomendacyjnego obejmują:
+    </p>
+    <figure>
+      <img
+        src="{% static 'images/compact_data.png' %}"
+        alt="compact data format"
+        width="700"
+        height="200"
+      />
+      <figcaption>Zagęszczony format danych</figcaption>
+    </figure>
+    <figure>
+      <img
+        src="{% static 'images/loose_data.png' %}"
+        alt="Opis zdjecia"
+        width="700"
+        height="200"
+      />
+      <figcaption>Luźny format danych</figcaption>
+    </figure>
+    <figure>
+      <img
+        src="{% static 'images/binary_data.png' %}"
+        alt="Opis zdjecia"
+        width="700"
+        height="200"
+      />
+      <figcaption>Binarny format danych</figcaption>
+    </figure>
+    <p>Dostępne algorytmy rekomendacji kontekstowych, wybierz algorytm:</p>
+    <form action="{% url 'wybor_algorytmu' %}" method="post">
+      {% csrf_token %}
+      <label>
+        <input type="radio" name="algorithm" value="Prefiltering" />
+        Prefiltering
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="algorithm" value="DCR" />
+        Differential context relaxation
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="algorithm" value="DCW" />
+        Differential context weighting
+      </label>
+      <br />
+      <label>
+        <input type="radio" name="algorithm" value="ItemsplittingKNN" />
+        Item-splitting KNN
+      </label>
+      <br />
+      <button type="submit">Rekomenduj</button>
+    </form>
+  </body>
+</html>
