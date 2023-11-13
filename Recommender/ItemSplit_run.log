@@ -1,0 +1,4 @@
+2023-11-13 12:54:55,339 Index(['userid', 'itemid', 'rating', 'Time', 'Location', 'Companion'], dtype='object')
+2023-11-13 12:55:07,422 {'mae': 0.6441631504922645, 'rmse': 1.5516465742513037, 'recall_result': 1.0}
+2023-11-13 13:07:38,527 Index(['userid', 'itemid', 'rating', 'Time', 'Location', 'Companion'], dtype='object')
+2023-11-13 13:07:50,654 {'mae': 0.6441631504922645, 'rmse': 1.5516465742513037, 'recall_result': 1.0}

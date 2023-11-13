@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from MainPage.models import UploadedFile
 import pandas as pd
-from tqdm import tqdm
-import time
+import logging
 from django.http import JsonResponse
+from utils.recommendations import Recommender
+
+
+logging.basicConfig(filename="ItemSplit_run.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w')
+ 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def prefiltering_page(request):
@@ -21,9 +29,12 @@ def Wyniki_prefiltering(request):
 
 
 def simulate_long_running_process(request):
-    data = []
-    for i in tqdm(range(100), desc="Processing"):
-        time.sleep(0.1)
-        data.append(f"Step {i} completed.")
+    pierwszy_plik = UploadedFile.objects.first()
+    file_path = pierwszy_plik.get_file_path()
+    data = pd.read_csv(file_path)
+    logger.info(data.columns)
+    rc_prefiltering = Recommender(data)
+    results = rc_prefiltering.perform_calculations()
+    logger.info(results)
 
-    return JsonResponse({'result': 'success', 'data': data})
+    return JsonResponse({'result': 'success', 'data': results})

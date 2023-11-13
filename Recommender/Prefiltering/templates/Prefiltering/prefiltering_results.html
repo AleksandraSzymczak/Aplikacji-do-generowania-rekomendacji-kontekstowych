@@ -6,34 +6,37 @@
   </head>
   <body>
     <h1>Prefiltering - Results</h1>
-    <button id="Start Algotytmu">Run Process</button>
+    <button id="runProcess">Run Process</button>
     <div id="loadingBar"></div>
 
     <script>
       $(document).ready(function () {
         $("#runProcess").click(function () {
-          // Show loading bar
-          $("#loadingBar").html("Przetwarzanie...<br><progress></progress>");
+          $("#loadingBar").html("Processing...<br><progress></progress>");
 
-          // Make AJAX request
           $.ajax({
-            url: "/simulate_long_running_process/",
+            url: "/prefiltering/Wyniki_prefiltering/simulate_long_running_process/",
             type: "GET",
             dataType: "json",
             success: function (data) {
-              // Process completed, hide loading bar
               $("#loadingBar").html("Process completed.");
+              var mae = data.data.mae;
+              var rmse = data.data.rmse;
+              var recallResult = data.data.recall_result;
 
-              // Handle the result as needed
-              console.log(data);
+              $("#maeResult").text("MAE: " + mae);
+              $("#rmseResult").text("RMSE: " + rmse);
+              $("#recallResult").text("Recall Result: " + recallResult);
             },
             error: function (error) {
-              // Handle errors
               console.error(error);
             },
           });
         });
       });
     </script>
+    <div id="maeResult">MAE:</div>
+    <div id="rmseResult">RMSE:</div>
+    <div id="recallResult">Recall Result:</div>
   </body>
 </html>
