@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wyniki</title>
+  </head>
+  <body>
+    {% if user_choices %}
+    <h1>Twoje wybory:</h1>
+    <p>
+      C1: {{ user_choices.c1_choices }} ({{ user_choices.selection_type_c1 }})
+    </p>
+    <p>
+      C2: {{ user_choices.c2_choices }} ({{ user_choices.selection_type_c2 }})
+    </p>
+    <p>
+      C3: {{ user_choices.c3_choices }} ({{ user_choices.selection_type_c3 }})
+    </p>
+    {% elif form.errors %}
+    <p>Błędy formularza:</p>
+    <ul>
+      {% for field, errors in form.errors.items %}
+      <li>{{ field }}: {{ errors }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Nie udało się przetworzyć formularza.</p>
+    {% endif %}
+  </body>
+</html>

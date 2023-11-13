@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prefiltering Algorytm</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+    <h1>Prefiltering - Results</h1>
+    <button id="Start Algotytmu">Run Process</button>
+    <div id="loadingBar"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#runProcess").click(function () {
+          // Show loading bar
+          $("#loadingBar").html("Przetwarzanie...<br><progress></progress>");
+
+          // Make AJAX request
+          $.ajax({
+            url: "/simulate_long_running_process/",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              // Process completed, hide loading bar
+              $("#loadingBar").html("Process completed.");
+
+              // Handle the result as needed
+              console.log(data);
+            },
+            error: function (error) {
+              // Handle errors
+              console.error(error);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

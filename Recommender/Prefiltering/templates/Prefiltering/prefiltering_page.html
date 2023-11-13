@@ -20,17 +20,15 @@
         </figcaption>
       </figure>
     </p>
+    <p>Kolumny wczytanego dataframe:</p>
     <ul>
       {% for context_var in context_list %}
       <li>{{ context_var }}</li>
       {% endfor %}
     </ul>
-    {% if mae %}
-    <p>MAE: {{ mae }}</p>
-    {% endif %} {% if rmse %}
-    <p>RMSE: {{ rmse }}</p>
-    {% endif %} {% if recall_result %}
-    <p>Recall Result: {{ recall_result }}</p>
-    {% endif %}
+    <form action="{% url 'Wyniki_prefiltering' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Zatwierdź wybory i przeprowadz rekomendacje</button>
+    </form>
   </body>
 </html>
