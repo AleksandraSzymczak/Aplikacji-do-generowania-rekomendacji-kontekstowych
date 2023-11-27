@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 
 
 def home(request):
-    return render(request, 'MainPage/home.html')
+    return render(request, 'MainPage/main.html')
 
 
 def upload_file(request):
@@ -16,11 +16,11 @@ def upload_file(request):
             uploaded_file = form.save()
             success_message = "Plik został pomyślnie przesłany."
 
-            return render(request, 'MainPage/home.html', {'form': form, 'success_message': success_message})
+            return render(request, 'MainPage/main.html', {'form': form, 'success_message': success_message})
     else:
         form = FileUploadForm()
 
-    return render(request, 'MainPage/home.html', {'form': form})
+    return render(request, 'MainPage/main.html', {'form': form})
 
 
 def recommend(request):

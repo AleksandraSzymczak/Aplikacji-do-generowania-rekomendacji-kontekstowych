@@ -46,6 +46,7 @@ def Wyniki(request):
         form = UserChoicesForm(form_data)
 
         if form.is_valid():
+            request.session['form_data'] = form_data
             form.save()
     else:
         form = UserChoicesForm()
@@ -54,11 +55,12 @@ def Wyniki(request):
 
 
 def simulate_long_running_process(request):
+    form_data = request.session.get('form_data', {})
     pierwszy_plik = UploadedFile.objects.first()
     file_path = pierwszy_plik.get_file_path()
     data = pd.read_csv(file_path)
-    logger.info(data.columns)
-    rc_prefiltering = Recommender(data)
+    logger.info(form_data)
+    rc_prefiltering = Recommender(data, type="DCR", form_data=form_data)
     results = rc_prefiltering.perform_calculations()
     logger.info(results)
 
