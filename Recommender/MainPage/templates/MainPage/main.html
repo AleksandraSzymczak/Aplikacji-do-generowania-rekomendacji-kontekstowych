@@ -7,60 +7,40 @@
     <title>Menu</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
-  <body>
-      <nav class="navbar">
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-            <img class="image-menu" src="{% static 'images/menu.png' %}" alt="Menu Icon">
-        </label>
-        <label class="logo">
-            <h1 class="heading">Context Aware Recommendation Engine</h1>
-        </label>
-        <ul>
-          <li><a class="active" href="default.asp">Data docs</a></li>
-          <li><a class="active" href="news.asp">User Examples</a></li>
-          <li class="submenu-parent">
-            <a class="active" href="#">Algorithms info</a>
-            <ul class="submenu">
-              <li><a href="#">Prefiltering</a></li>
-              <li><a href="#">DCR</a></li>
-              <li><a href="#">DCW</a></li>
-            </ul>
-          </li>
-          <li>
-            <a class="active" href="#">Resources</a>
-          </li>
-          <li>
-            <a class="active">
-            <img
-              class="image"
-              src="{% static 'images/profile.png' %}"
-              alt="User Image"
-            />
-            </a>
-          </li>
-          <li>
-            <a class="active">
-            <button class="logout-button">Log out</button>
-            </a>
-          </li>
-        </ul>
-    </nav>
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}" />
+    <script type="text/javascript" src="{% static 'navbar.js' %}"></script>
+    <body>
+    {% include 'navbar.html' %}
     <section>
+        <div class="main-header">
+            <h1>Choose your data</h1>
+            <hr>
+        </div>
+        <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="dataFile">Select a file to upload:</label>
+                <input type="file" id="dataFile" name="dataFile" accept=".csv, .xlsx, .xls">
+            </div>
+            <div>
+                <button type="submit">Upload Data</button>
+            </div>
+        </form>
       <div>
         <div class="main-header">
           <h1>Choose your algorithm</h1>
           <hr>
         </div>
         <div class="algo-choose">
-          <form>
+            <form action="{% url 'wybor_algorytmu' %}" method="post">
+            {% csrf_token %}
             <ul>
               <li>
                 <input
                   type="radio"
                   id="prefiltering"
                   name="algorithm"
-                  value="prefiltering"
+                  value="Prefiltering"
                 />
                 <label for="prefiltering" title="Hint for Prefiltering"
                   >Prefiltering</label
@@ -71,7 +51,7 @@
                   type="radio"
                   id="context_relaxation"
                   name="algorithm"
-                  value="context_relaxation"
+                  value="DCR"
                 />
                 <label
                   for="context_relaxation"
@@ -84,7 +64,7 @@
                   type="radio"
                   id="context_weighting"
                   name="algorithm"
-                  value="context_weighting"
+                  value="DCW"
                 />
                 <label
                   for="context_weighting"
@@ -93,11 +73,11 @@
                 >
               </li>
             </ul>
-          </form>
         </div>
-        <button type="button" class="algo-run-button">
-          Run Recommendation Steps
-        </button>
+            <button type="submit" class="algo-run-button">
+            Run Recommendation Steps
+            </button>
+        </form>
     </section>
     <hr>
     <div>

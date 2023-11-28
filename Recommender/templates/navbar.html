@@ -1,0 +1,43 @@
+{% load static %}
+<nav class="navbar">
+  <input type="checkbox" id="check" />
+  <label for="check" class="checkbtn">
+    <img
+      class="image-menu"
+      src="{% static 'images/menu.png' %}"
+      alt="Menu Icon"
+    />
+  </label>
+  <label class="logo">
+    <h1 class="heading">Context Aware Recommendation Engine</h1>
+  </label>
+  <ul>
+    <li><a class="active" href="default.asp">Data docs</a></li>
+    <li><a class="active" href="news.asp">User Examples</a></li>
+    <li class="submenu-parent" id="algorithms-info">
+      <a class="active" href="#">Algorithms info</a>
+      <ul class="submenu">
+        <li><a href="#">Prefiltering</a></li>
+        <li><a href="#">DCR</a></li>
+        <li><a href="#">DCW</a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="active" href="#">Resources</a>
+    </li>
+    <li>
+      <a class="active">
+        <img
+          class="image"
+          src="{% static 'images/profile.png' %}"
+          alt="User Image"
+        />
+      </a>
+    </li>
+    <li>
+      <a class="active">
+        <button class="logout-button">Log out</button>
+      </a>
+    </li>
+  </ul>
+</nav>
