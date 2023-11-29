@@ -33,14 +33,10 @@ def Wyniki(request):
         c1_choices_json = json.dumps(c1_choices_list)
         c2_choices_json = json.dumps(c2_choices_list)
         c3_choices_json = json.dumps(c3_choices_list)
-        logger.info(request.POST.get('selection_type_c1'))
         form_data = {
             'c1_choices': c1_choices_json,
-            'selection_type_c1': request.POST.get('selection_type_c1'),
             'c2_choices': c2_choices_json,
-            'selection_type_c2': request.POST.get('selection_type_c2'),
             'c3_choices': c3_choices_json,
-            'selection_type_c3': request.POST.get('selection_type_c3'),
         }
 
         form = UserChoicesForm(form_data)

@@ -1,34 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Prefiltering Algorytm</title>
-    {% load static %}
+    <title>Differential Context Relaxation</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" type="text/css"href="{% static 'styles-res.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'utils.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'console.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'report.css' %}" />
+    <script type="text/javascript" src="{% static 'navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dcr.js' %}"></script>
   </head>
   <body>
-    <h1>Prefiltering</h1>
-    <h4>
-      Algorytm zaimplementowany na podstawie artykułu "Differential Context
-      Relaxation for Context-Aware Travel Recommendation" - Yong Zheng, Robin
-      Burke, and Bamshad Mobasher
-    </h4>
-    <p>
-      <figure>
-        <img src="{% static 'images/wzor_prefiltering.jpg' %}" />
-        <figcaption>
-          UBCF User-based collaborative Filtering recommendation Resnick’s
-          algorithm
-        </figcaption>
-      </figure>
-    </p>
-    <p>Kolumny wczytanego dataframe:</p>
-    <ul>
-      {% for context_var in context_list %}
-      <li>{{ context_var }}</li>
-      {% endfor %}
-    </ul>
-    <form action="{% url 'Wyniki_prefiltering' %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Zatwierdź wybory i przeprowadz rekomendacje</button>
-    </form>
+    {% include 'navbar.html' %}
+    <hr />
+      <div class="form-container-right">{% include 'console_log.html' %}</div>
+    </div>
+    {% include 'report.html' %}
   </body>
 </html>

@@ -1,63 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
   <head>
     <title>Differential Context Relaxation</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'utils.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles-res.css' %}"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'console.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'report.css' %}" />
+    <script type="text/javascript" src="{% static 'navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dcr.js' %}"></script>
   </head>
   <body>
-    {% if form.is_valid %}
-    <h1>Differential Context Relaxation - Results</h1>
-    <p><strong>C1:</strong></p>
-    <p>Choices: {{ form.cleaned_data.c1_choices }}</p>
-    <p>Selection Type: {{ form.cleaned_data.selection_type_c1 }}</p>
-
-    <p><strong>C2:</strong></p>
-    <p>Choices: {{ form.cleaned_data.c2_choices }}</p>
-    <p>Selection Type: {{ form.cleaned_data.selection_type_c2 }}</p>
-
-    <p><strong>C3:</strong></p>
-    <p>Choices: {{ form.cleaned_data.c3_choices }}</p>
-    <p>Selection Type: {{ form.cleaned_data.selection_type_c3 }}</p>
-    {% elif form.errors %}
-    <p>Błędy formularza:</p>
-    <ul>
-      {% for field, errors in form.errors.items %}
-      <li>{{ field }}: {{ errors }}</li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>Nie udało się przetworzyć formularza.</p>
-    {% endif %}
-    <button id="runProcess">Run Process</button>
-    <div id="loadingBar"></div>
-
-    <script>
-      $(document).ready(function () {
-        $("#runProcess").click(function () {
-          $("#loadingBar").html("Processing...<br><progress></progress>");
-
-          $.ajax({
-            url: "/DCR/wyniki/simulate_long_running_process/",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-              $("#loadingBar").html("Process completed.");
-              var mae = data.data.mae;
-              var rmse = data.data.rmse;
-              var recallResult = data.data.recall_result;
-
-              $("#maeResult").text("MAE: " + mae);
-              $("#rmseResult").text("RMSE: " + rmse);
-              $("#recallResult").text("Recall Result: " + recallResult);
-            },
-            error: function (error) {
-              console.error(error);
-            },
-          });
-        });
-      });
-    </script>
-    <div id="maeResult">MAE:</div>
-    <div id="rmseResult">RMSE:</div>
-    <div id="recallResult">Recall Result:</div>
+    {% include 'navbar.html' %}
+    <hr />
+    <div class="form-grid">
+      <div class="form-container-left">
+        <p><strong>Parameters</strong></p>
+        <ul class="choices-container">
+          <li>
+            <p><strong>C1:</strong></p>
+            {% if form.cleaned_data.c1_choices %}
+            <p>{{ form.cleaned_data.c1_choices|join:', ' }}</p>
+            {% elif form.errors %} {% endif %}
+          </li>
+          <li>
+            <p><strong>C2:</strong></p>
+            {% if form.cleaned_data.c2_choices %}
+            <p>{{ form.cleaned_data.c2_choices|join:', ' }}</p>
+            {% elif form.errors %} {% endif %}
+          </li>
+          <li>
+            <p><strong>C3:</strong></p>
+            {% if form.cleaned_data.c3_choices %}
+            <p>{{ form.cleaned_data.c3_choices|join:', ' }}</p>
+            {% elif form.errors %} {% endif %}
+          </li>
+        </ul>
+      </div>
+      <div class="form-container-right">{% include 'console_log.html' %}</div>
+    </div>
+    {% include 'report.html' %}
   </body>
 </html>

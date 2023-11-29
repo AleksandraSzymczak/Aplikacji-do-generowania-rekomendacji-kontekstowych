@@ -1,33 +1,4 @@
-*{
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  list-style: none;
-  box-sizing: border-box;
-}
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f5f7fa;
-  color: #2a2929;
-}
-hr {
-  display: block;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  margin-left: auto;
-  margin-right: auto;
-  border-style: inset;
-  border-width: 1px;
-}
-
-.main-header {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  text-align: center;
-}
-p {
-  margin-left:5%;
-}
+.data-part,
 .algo-choose {
   margin-left: 20%;
 }
@@ -45,23 +16,10 @@ p {
   margin-right: 2%;
 }
 
-button {
-  background-color: #4ca5af;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-
-}
 button.algo-run-button {
   margin-left: 60%; 
   margin-top: 5%;
   margin-bottom: 5%;
-}
-
-button:hover {
-  background-color: #458fa0;
 }
 
 @media (max-width: 880px) {
