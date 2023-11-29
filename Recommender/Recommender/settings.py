@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "MainPage",
     "Prefiltering",
     "DCR",
+    "DCW",
     "DataPage"
 ]
 

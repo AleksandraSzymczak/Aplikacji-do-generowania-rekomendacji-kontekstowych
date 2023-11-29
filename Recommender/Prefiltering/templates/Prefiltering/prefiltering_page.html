@@ -3,9 +3,12 @@
 <html>
   <head>
     <title>Differential Context Relaxation</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" type="text/css"href="{% static 'styles-res.css' %}"/>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles-res.css' %}"
+    />
     <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'utils.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'console.css' %}" />
@@ -16,8 +19,7 @@
   <body>
     {% include 'navbar.html' %}
     <hr />
-      <div class="form-container-right">{% include 'console_log.html' %}</div>
-    </div>
-    {% include 'report.html' %}
+    <div class="form-container-right">{% include 'console_log.html' %}</div>
+    <div id="reportContent">{% include 'report.html' %}</div>
   </body>
 </html>

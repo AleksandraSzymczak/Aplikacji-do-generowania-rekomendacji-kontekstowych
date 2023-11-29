@@ -32,7 +32,7 @@ def recommend(request):
             return redirect('prefiltering_page')
         elif selected_algorithm == 'DCR':
             return redirect('DCR_page')
-        elif selected_algorithm == 'ItemSplittingKNN':
-            return redirect('item_splitting_knn_page')
+        elif selected_algorithm == 'DCW':
+            return redirect('DCW_page')
 
     return render(request, 'wybor_algorytmu.html')

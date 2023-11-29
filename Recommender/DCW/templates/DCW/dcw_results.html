@@ -43,6 +43,12 @@
               <p>{{ form.cleaned_data.c3_choices|join:', ' }}</p>
               {% elif form.errors %} {% endif %}
             </li>
+            <li>
+              <p><strong>Weights:</strong></p>
+              {% for key, value in weights.items %}
+              <p>{{ key }}: {{ value }}</p>
+              {% endfor %}
+            </li>
           </ul>
         </div>
       </div>

@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('MainPage.urls')),
     path('prefiltering/', include('Prefiltering.urls')),
     path('DCR/', include('DCR.urls')),
+    path('DCW/', include('DCW.urls')),
 ]

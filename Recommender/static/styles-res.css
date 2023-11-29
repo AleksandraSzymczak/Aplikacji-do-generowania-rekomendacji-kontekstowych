@@ -4,13 +4,6 @@
     gap: 20px;  /* Adjust the gap between columns as needed */
 }
 
-.form-container-left {
-    background-color: #87b6c0b5;
-    border-left: 6px solid #458fa0;
-    padding: 10px;
-    max-height: 220px;
-}
-
 .choices-container {
     margin-bottom: 2%;
     margin-right: 10%;
@@ -34,4 +27,10 @@
 
 button {
     margin-bottom: 10px;
+}
+
+.note{
+    background-color: #87b6c0b5;
+    border-left: 6px solid #458fa0;
+    padding: 10px;
 }
