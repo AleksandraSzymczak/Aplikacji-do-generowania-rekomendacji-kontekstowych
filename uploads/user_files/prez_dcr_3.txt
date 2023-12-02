@@ -1,0 +1,13 @@
+Component 2: Peer Baseline |
+
+= Original algorithm
+= Average over all of the ratings by a neighbor to
+establish a baseline
+= Context-aware
+= given context C
+= Average over only those ratings matching c given
+
+constraint C,
+
+Pred(u,i,c)=7,+
+

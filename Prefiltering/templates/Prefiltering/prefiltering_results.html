@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prefiltering Algorytm</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+  <body>
+    <h1>Prefiltering - Results</h1>
+    <button id="runProcess">Run Process</button>
+    <div id="loadingBar"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#runProcess").click(function () {
+          $("#loadingBar").html("Processing...<br><progress></progress>");
+
+          $.ajax({
+            url: "/prefiltering/Wyniki_prefiltering/simulate_long_running_process/",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              $("#loadingBar").html("Process completed.");
+              var mae = data.data.mae;
+              var rmse = data.data.rmse;
+              var recallResult = data.data.recall_result;
+
+              $("#maeResult").text("MAE: " + mae);
+              $("#rmseResult").text("RMSE: " + rmse);
+              $("#recallResult").text("Recall Result: " + recallResult);
+            },
+            error: function (error) {
+              console.error(error);
+            },
+          });
+        });
+      });
+    </script>
+    <div id="maeResult">MAE:</div>
+    <div id="rmseResult">RMSE:</div>
+    <div id="recallResult">Recall Result:</div>
+  </body>
+</html>

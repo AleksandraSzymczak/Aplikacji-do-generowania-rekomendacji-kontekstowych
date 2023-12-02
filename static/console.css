@@ -1,0 +1,13 @@
+.log-window {
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.progress-container {
+    width: 300px;
+    margin-top: 10px;
+}

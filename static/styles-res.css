@@ -1,0 +1,36 @@
+.form-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;  /* Two columns with equal width */
+    gap: 20px;  /* Adjust the gap between columns as needed */
+}
+
+.choices-container {
+    margin-bottom: 2%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.choices-container li {
+    margin-bottom: 10px;
+}
+
+.choices-container p {
+    margin: 0;
+}
+
+.form-container-right {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    margin-bottom: 10px;
+}
+
+.note{
+    background-color: #87b6c0b5;
+    border-left: 6px solid #458fa0;
+    padding: 10px;
+}

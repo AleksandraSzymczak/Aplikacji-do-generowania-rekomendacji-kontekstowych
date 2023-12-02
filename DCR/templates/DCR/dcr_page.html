@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Differential Context Relaxation Algorytm</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles-dcr.css' %}"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'utils.css' %}" />
+    <script type="text/javascript" src="{% static 'navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dcr.js' %}"></script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <div class="main-header">
+      <h1>Choose your context variables</h1>
+      <hr />
+    </div>
+    <form action="{% url 'Wyniki' %}" method="post">
+      {% csrf_token %}
+
+      <fieldset>
+        <legend>
+          C1 - Zmienna po której przeprowadzona zostanie selekcja sąsiadów
+        </legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c1_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label><br />
+        {% endfor %}
+      </fieldset>
+
+      <fieldset>
+        <legend>C2 - Zmienna decydująca o wkładzie sąsiadów</legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c2_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label><br />
+        {% endfor %}
+      </fieldset>
+
+      <fieldset>
+        <legend>C3 - Zmienna decydująca o linii bazowej użytkownika</legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c3_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label><br />
+        {% endfor %}
+      </fieldset>
+
+      <button type="submit" class="confirm">Confirm selection</button>
+    </form>
+  </body>
+</html>
