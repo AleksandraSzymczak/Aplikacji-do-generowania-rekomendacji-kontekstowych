@@ -1,6 +1,8 @@
-2023-12-02 16:27:46,917 START
-2023-12-02 16:27:46,917 <WSGIRequest: GET '/prefiltering/Wyniki_prefiltering/simulate_long_running_process/'>
-2023-12-02 16:27:46,922 Index(['User', ' Item', ' Rating', ' time:weekend', ' time:weekday',
+2023-12-02 16:38:19,681 Not Found: /
+2023-12-02 16:38:19,854 Not Found: /favicon.ico
+2023-12-02 16:38:42,770 START
+2023-12-02 16:38:42,770 <WSGIRequest: GET '/prefiltering/Wyniki_prefiltering/simulate_long_running_process/'>
+2023-12-02 16:38:42,786 Index(['User', ' Item', ' Rating', ' time:weekend', ' time:weekday',
        ' location:cinema', ' companion:family', ' companion:partner'],
       dtype='object')
-2023-12-02 16:27:46,975 {'mae': 2.0555555555555554, 'rmse': 2.8382310609877335, 'recall_result': 1.0}
+2023-12-02 16:38:42,917 {'mae': 2.0555555555555554, 'rmse': 2.8382310609877335, 'recall_result': 1.0}
