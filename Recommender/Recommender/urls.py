@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.static import static
-from .settings import MEDIA_ROOT, MEDIA_URL
 
 
 urlpatterns = [
+    
     path("admin/", admin.site.urls),
     path('', include('MainPage.urls')),
     path('prefiltering/', include('Prefiltering.urls')),
     path('DCR/', include('DCR.urls')),
     path('DCW/', include('DCW.urls')),
+    path('api/', include('account.urls')),
+    path('data/', include('DataPage.urls'))
+
 ]

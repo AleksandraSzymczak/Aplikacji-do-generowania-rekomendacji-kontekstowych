@@ -17,11 +17,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def DCR_page(request):
-    pierwszy_plik = UploadedFile.objects.first()
-    file_path = pierwszy_plik.get_file_path()
-    df = pd.read_csv(file_path) 
-    context_var_list = df.columns[3:].tolist()
-    return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list})
+    return render(request, 'DCR/dcr_page.html', {'context_list': ["context_var_list"]})
 
 
 def Wyniki(request):

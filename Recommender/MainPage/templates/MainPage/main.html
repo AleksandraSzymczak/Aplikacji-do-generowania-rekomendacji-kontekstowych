@@ -17,15 +17,19 @@
             <h1>Choose your data</h1>
             <hr>
         </div>
-        <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="data-part">
-                <label for="dataFile">Select a file to upload:</label>
-                <input type="file" id="dataFile" name="dataFile" accept=".csv, .xlsx, .xls">
-                <div>
-                    <button type="submit" class="algo-run-button">Upload Data</button>
-                </div>
-            </div>
+        <form class="login-form" id="uploadForm" action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" />
+          </div>
+          <div class="form-group">
+            <button type="submit">Upload</button>
+          </div>
         </form>
       <div>
         <div class="main-header">
@@ -87,5 +91,35 @@
         you want to add data to your account, go to the resource tab.
       </p>
     </div>
+    <script>
+      document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+    
+        var formData = new FormData(this);
+        
+        // Get the JWT token from wherever it is stored (e.g., cookies, local storage)
+        var token = localStorage.getItem('access_token');
+    
+        fetch("{% url 'upload_file' %}", {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('File uploaded successfully!');
+          } else {
+            alert('Error uploading file. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      });
+    </script>
+    
   </body>
 </html>

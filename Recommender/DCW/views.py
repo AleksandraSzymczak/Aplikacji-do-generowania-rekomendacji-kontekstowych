@@ -5,6 +5,7 @@ from .forms import UserChoicesForm
 import pandas as pd
 import json
 import logging
+from DataPage.models import Files
 from utils.recommendations import Recommender
 from django.http import JsonResponse
 
@@ -17,10 +18,11 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def DCW_page(request):
-    pierwszy_plik = UploadedFile.objects.first()
-    file_path = pierwszy_plik.get_file_path()
-    df = pd.read_csv(file_path) 
-    context_var_list = df.columns[3:].tolist()
+    current_user = request.user
+    ostatni_plik = Files.objects.filter(user=current_user).order_by('-uploaded_at').first()
+    file_path = ostatni_plik.file.path
+    data = pd.read_csv(file_path)
+    context_var_list = data.columns[3:].tolist()
     return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list})
 
 

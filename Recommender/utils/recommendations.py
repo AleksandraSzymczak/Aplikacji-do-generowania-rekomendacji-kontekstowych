@@ -114,5 +114,5 @@ class Recommender():
         flat_predicted_matrix = predicted_ratings_df.values.flatten()
         mae = calculate_mae(flat_user_item_matrix, flat_predicted_matrix)
         rmse = calculate_rmse(flat_user_item_matrix, flat_predicted_matrix)
-        recall_result = calculate_recall(user_item_matrix, predicted_ratings_df)
+        recall_result = calculate_recall(self.USER_ID, user_item_matrix, predicted_ratings_df)
         return {"mae": mae, "rmse": rmse, "recall_result": recall_result}

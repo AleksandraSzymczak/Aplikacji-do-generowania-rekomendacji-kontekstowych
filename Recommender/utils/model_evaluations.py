@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-def calculate_recall(relevant_items, recommended_items):
-    merged_df = pd.merge(relevant_items, recommended_items, on='userid', how='inner')
+def calculate_recall(user_id, relevant_items, recommended_items):
+    merged_df = pd.merge(relevant_items, recommended_items, on=user_id, how='inner')
 
     true_positives = len(merged_df)
     false_negatives = len(relevant_items) - true_positives
