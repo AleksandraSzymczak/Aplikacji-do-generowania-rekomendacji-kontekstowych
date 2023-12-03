@@ -1,0 +1,13 @@
+Component 1: Neighbors
+
+= Original algorithm
+= Select neighbors who have rated item i
+
+= Context-aware
+= given context c
+
+= Select neighbors who have rated item iin context
+matching c, relative to constraint C,
+
+Pred(u,i,c)=7, +
+
