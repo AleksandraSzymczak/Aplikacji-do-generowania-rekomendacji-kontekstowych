@@ -7,6 +7,11 @@ from django.utils.decorators import method_decorator
 from .models import Files
 from .forms import FileUploadForm
 from django.http import JsonResponse
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+import pandas as pd
+from django.http import JsonResponse
+import json
 
 
 @method_decorator(login_required, name='dispatch')
@@ -25,19 +30,49 @@ class FileUploadView(View):
             new_file = form.save(commit=False)
             new_file.user = request.user
             new_file.save()
-            return JsonResponse({'success': True})
+            return redirect('Data_page')
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
 
 @method_decorator(login_required, name='dispatch')
 class FileDeleteView(View):
-    template_name = 'delete_file.html'
+    def post(self, request):
+        try:
+            file_ids = json.loads(request.body.decode('utf-8'))['file_ids']
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
 
+        print("User:", request.user)
+        deleted_files = []
+
+        for file_id in file_ids:
+            try:
+                # Attempt to convert file_id to integer
+                #file_id = int(file_id)
+                file_to_delete = Files.objects.get(file="user_files/"+file_id, user=request.user)
+                print("Deleting file:", file_to_delete)
+                file_to_delete.delete()
+                deleted_files.append(file_id)
+            except ValueError:
+                print(f"Invalid file_id: {file_id}")
+                # Handle the case where file_id is not a valid integer
+
+        return JsonResponse({'deleted_files': deleted_files})
+
+
+def Data_page(request):
+    current_user = request.user
+    pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
+    substring_to_remove = "user_files/"
+    result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
+    return render(request, 'DataPage/data.html', {'pliki': result_list})
+
+
+class FileDownloadView(View):
     def get(self, request, file_id):
-        file_to_delete = Files.objects.get(id=file_id)
-        return render(request, self.template_name, {'file': file_to_delete})
+        file_path = f"user_files/{file_id}"
+        file_object = get_object_or_404(Files, file=file_path, user=request.user)
+        response = FileResponse(file_object.file, as_attachment=True)
+        response['Content-Disposition'] = f'attachment; filename="{file_object.file.name}"'
+        return response
 
-    def post(self, request, file_id):
-        file_to_delete = Files.objects.get(id=file_id)
-        file_to_delete.delete()
-        return redirect('home')  # Przekieruj na stronę główną po usunięciu pliku

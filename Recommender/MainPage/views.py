@@ -35,4 +35,4 @@ def recommend(request):
         elif selected_algorithm == 'DCW':
             return redirect('DCW_page')
 
-    return render(request, 'wybor_algorytmu.html')
+    return render(request, 'MainPage/main.html')

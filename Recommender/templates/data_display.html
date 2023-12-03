@@ -1,0 +1,13 @@
+<div class="vertical-menu">
+    {% for plik in pliki %}
+        <a>
+            <input
+                type="checkbox"
+                id="{{ plik }}"
+                name="c1_choices"
+                value="{{ plik }}"
+            />
+            <label "{{ plik }}">{{ plik }}</label>
+        </a>
+    {% endfor %}
+</div>

@@ -91,35 +91,5 @@
         you want to add data to your account, go to the resource tab.
       </p>
     </div>
-    <script>
-      document.getElementById('uploadForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-    
-        var formData = new FormData(this);
-        
-        // Get the JWT token from wherever it is stored (e.g., cookies, local storage)
-        var token = localStorage.getItem('access_token');
-    
-        fetch("{% url 'upload_file' %}", {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Authorization': 'Bearer ' + token,
-          },
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('File uploaded successfully!');
-          } else {
-            alert('Error uploading file. Please try again.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-      });
-    </script>
-    
   </body>
 </html>
