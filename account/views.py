@@ -6,10 +6,10 @@ from .forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from rest_framework_simplejwt.views import TokenRefreshView
-
+from DataPage.views import Files
 
 def register(request):
-    return render(request, 'account/login.html')
+    return render(request, 'account/login.html', )
 
 @api_view(['POST'])
 def register2(request):

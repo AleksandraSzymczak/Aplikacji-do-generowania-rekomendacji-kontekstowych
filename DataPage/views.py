@@ -8,6 +8,7 @@ from .models import Files
 from .forms import FileUploadForm
 from django.http import JsonResponse
 from django.http import FileResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 import pandas as pd
 from django.http import JsonResponse
@@ -70,9 +71,24 @@ def Data_page(request):
 
 class FileDownloadView(View):
     def get(self, request, file_id):
-        file_path = f"user_files/{file_id}"
-        file_object = get_object_or_404(Files, file=file_path, user=request.user)
-        response = FileResponse(file_object.file, as_attachment=True)
-        response['Content-Disposition'] = f'attachment; filename="{file_object.file.name}"'
-        return response
+        file_object = get_object_or_404(Files, file="user_files/"+file_id, user=request.user)
+        file_path = file_object.file.path  # Assuming 'file' is a FileField in your model
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{file_object.file.name}"'
+            return response
 
+def transform(request):
+    if request.method == 'POST':
+        option_value = request.POST.get('option_value')
+        file_Ids = request.POST.get('file_Ids')
+        if option_value == "binary":
+            pass
+        if option_value == "comact":
+            pass
+        if option_value == "loose":
+            pass
+        response_data = {'message': f'Option clicked: {option_value}'}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/utils.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/data-display.css' %}" />
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
   </head>
     <body>
@@ -16,21 +17,9 @@
         <div class="main-header">
             <h1>Choose your data</h1>
             <hr>
+            {% include 'data_display.html' %}
         </div>
-        <form class="login-form" id="uploadForm" action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="file">File:</label>
-            <input type="file" id="file" name="file" required />
-          </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" />
-          </div>
-          <div class="form-group">
-            <button type="submit">Upload</button>
-          </div>
-        </form>
+        
       <div>
         <div class="main-header">
           <h1>Choose your algorithm</h1>

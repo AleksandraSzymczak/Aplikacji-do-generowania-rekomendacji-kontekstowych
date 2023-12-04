@@ -28,6 +28,7 @@ function deleteSelected() {
     }
 }
 
+
 function downloadSelected() {
     var selectedFiles = document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked');
     

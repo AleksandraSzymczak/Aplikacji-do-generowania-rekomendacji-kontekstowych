@@ -3,10 +3,15 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from .forms import FileUploadForm
 from django.shortcuts import render, redirect
+from DataPage.views import Files
 
 
 def home(request):
-    return render(request, 'MainPage/main.html')
+    current_user = request.user
+    pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
+    substring_to_remove = "user_files/"
+    result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
+    return render(request, 'MainPage/main.html', {'pliki': result_list})
 
 
 def upload_file(request):

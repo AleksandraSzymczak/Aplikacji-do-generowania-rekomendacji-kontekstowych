@@ -5,61 +5,125 @@
     <meta charset="utf-8" />
     <title>Menu</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/utils.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/data-page-style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/data-display.css' %}" />
-    <script type="text/javascript" src="{% static 'js/data-func.js' %}"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/navbar.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/utils.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/data-page-style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/data-display.css' %}"
+    />
+    <script
+      type="text/javascript"
+      src="{% static 'js/data-func.js' %}"
+    ></script>
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <body>
     {% include 'navbar.html' %}
     <div>
       <div class="main-header">
         <h1>Your Data</h1>
-        <hr>
-    </div>
-    <div class="grid-container">
-      <div class="grid-item">
+        <hr />
+      </div>
+      <div class="grid-container">
+        <div class="grid-item">
           <div class="buttons-container-one">
-              <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <button type="submit">Upload</button>
-                  <input type="file" id="file" name="file" accept=".csv, .xlsx" required />
-                  <div>
-                      <label for="description">Description:</label>
-                      <input type="text" id="description" name="description" />
+            <form
+              action="{% url 'upload_file' %}"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
+              <button type="submit">Upload</button>
+              <input
+                type="file"
+                id="file"
+                name="file"
+                accept=".csv, .xlsx"
+                required
+              />
+              <div>
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" />
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="grid-item">
+            {% include 'data_display.html' %}
+        </div>
+        <script>
+          var csrfToken = "{{ csrf_token }}";
+        </script>
+        <div class="grid-item">
+            <div class="buttons-container-two">
+                <button onclick="deleteSelected()">delete</button>
+                <button onclick="downloadSelected()">download</button>
+                <div class="dropdown">
+                  <button>transform</button>
+                  <div class="dropdown-content">
+                    <a href="binary">binary</a>
+                    <a href="comact">compact</a>
+                    <a href="loose">loose</a>
                   </div>
-              </form>
-          </div>
-      </div>
-  
-      <div class="grid-item">
-          <div class="vertical-menu">
-              {% for plik in pliki %}
-                  <a>
-                      <input
-                          type="checkbox"
-                          id="{{ plik }}"
-                          name="c1_choices"
-                          value="{{ plik }}"
-                      />
-                      <label for="{{ plik }}">{{ plik }}</label>
-                  </a>
-              {% endfor %}
-          </div>
-      </div>
-      <script>
-        var csrfToken = "{{ csrf_token }}";
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      $(document).ready(function() {
+        // Znajdź wszystkie linki w dropdownie
+        $('.dropdown-content a').on('click', function(e) {
+          // Zatrzymaj domyślne zachowanie linku
+          e.preventDefault();
+          var selectedFiles = document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked');
+    
+          if (selectedFiles.length > 0) {
+            var fileIds = Array.from(selectedFiles).map(checkbox => checkbox.value);
+            // Pobierz wartość z atrybutu href (adres URL)
+            var optionValue = $(this).attr('href');
+            var token = localStorage.getItem('access_token');
+            var csrfToken = $('[name=csrfmiddlewaretoken]').val();
+            // Wywołaj funkcję Django za pomocą AJAX
+            $.ajax({
+              url: 'handle_option_click/',  // Zmień na odpowiednią ścieżkę URL
+              method: 'POST',  // Lub GET w zależności od Twoich potrzeb
+              headers: {
+                "Authorization": "Bearer " + token,
+                "X-CSRFToken": csrfToken
+              },
+              data: { option_value: optionValue , file_Ids: fileIds},
+              success: function(response) {
+                console.log('Server response:', response);
+                // Tutaj możesz obsłużyć odpowiedź z serwera
+              },
+              error: function(error) {
+                console.error('AJAX error:', error);
+              }
+            });
+          }
+          });
+      });
     </script>
-      <div class="grid-item">
-          <div class="buttons-container-two">
-              <button onclick="deleteSelected()">delete</button>
-              <button onclick="downloadSelected()">download</button>
-              <button>transform</button>
-          </div>
-      </div>
-  </div>
   </body>
 </html>
