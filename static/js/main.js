@@ -1,26 +1,22 @@
-document.getElementById('uploadForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    var formData = new FormData(this);
-    
-    //var token = localStorage.getItem('access_token');
-
-    fetch("{% url 'upload_file' %}", {
-      method: 'POST',
-      body: formData,
-      //headers: {
-      //  'Authorization': 'Bearer ' + token,
-      //},
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('File uploaded successfully!');
-      } else {
-        alert('Error uploading file. Please try again.');
-      }
+function handleAlgorithmSelection(selectedAlgorithm, selectedFiles) {
+    var token = localStorage.getItem('access_token');
+    var csrfToken = $('[name=csrfmiddlewaretoken]').val();
+    // Wywołaj funkcję Django za pomocą AJAX
+    console.log(selectedAlgorithm);
+    console.log(selectedFiles);
+    fetch('wybor_algorytmu/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({
+            algorithm: selectedAlgorithm,
+            selected_files: selectedFiles,
+        }),
     })
     .catch(error => {
-      console.error('Error:', error);
+        console.error('Fetch error:', error);
     });
-  });
+}

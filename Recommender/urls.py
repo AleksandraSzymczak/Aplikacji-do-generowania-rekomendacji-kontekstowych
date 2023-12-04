@@ -26,6 +26,6 @@ urlpatterns = [
     path('DCR/', include('DCR.urls')),
     path('DCW/', include('DCW.urls')),
     path('api/', include('account.urls')),
-    path('data/', include('DataPage.urls'))
-
+    path('data/', include('DataPage.urls')),
+    path('docs/', include('Docs.urls'))
 ]

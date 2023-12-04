@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "DCW",
     "DataPage",
     "account",
+    "Docs",
     'corsheaders'
 ]
 

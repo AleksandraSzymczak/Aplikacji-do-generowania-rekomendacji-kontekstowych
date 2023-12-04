@@ -4,6 +4,7 @@ from django.core.files.base import ContentFile
 from .forms import FileUploadForm
 from django.shortcuts import render, redirect
 from DataPage.views import Files
+from django.contrib import messages
 
 
 def home(request):
@@ -31,7 +32,8 @@ def upload_file(request):
 def recommend(request):
     if request.method == 'POST':
         selected_algorithm = request.POST.get('algorithm', '')
-        
+        print(f'Selected Algorithm: {selected_algorithm}')  # Add this line for debugging
+
         # Przekieruj na odpowiednią stronę w zależności od wyboru
         if selected_algorithm == 'Prefiltering':
             return redirect('prefiltering_page')
