@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Menu</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/utils.css' %}" />
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+  </head>
+    <body>
+    {% include 'navbar.html' %}
+    <section>
+        <div class="main-header">
+            <h1>Choose your data</h1>
+            <hr>
+        </div>
+        <form class="login-form" id="uploadForm" action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" />
+          </div>
+          <div class="form-group">
+            <button type="submit">Upload</button>
+          </div>
+        </form>
+      <div>
+        <div class="main-header">
+          <h1>Choose your algorithm</h1>
+          <hr>
+        </div>
+        <div class="algo-choose">
+            <form action="{% url 'wybor_algorytmu' %}" method="post">
+            {% csrf_token %}
+            <ul>
+              <li>
+                <input
+                  type="radio"
+                  id="prefiltering"
+                  name="algorithm"
+                  value="Prefiltering"
+                />
+                <label for="prefiltering" title="Hint for Prefiltering"
+                  >Prefiltering</label
+                >
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="context_relaxation"
+                  name="algorithm"
+                  value="DCR"
+                />
+                <label
+                  for="context_relaxation"
+                  title="Hint for Differential Context Relaxation"
+                  >Differential Context Relaxation</label
+                >
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="context_weighting"
+                  name="algorithm"
+                  value="DCW"
+                />
+                <label
+                  for="context_weighting"
+                  title="Hint for Differential context weighting"
+                  >Differential context weighting</label
+                >
+              </li>
+            </ul>
+        </div>
+            <button type="submit" class="algo-run-button">
+            Run Recommendation Steps
+            </button>
+        </form>
+    </section>
+    <hr>
+    <div>
+      <p>
+        All mentioned algorithms are described in the Algorithms info tab. If
+        you want to add data to your account, go to the resource tab.
+      </p>
+    </div>
+  </body>
+</html>

@@ -25,7 +25,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 SECRET_KEY = "django-insecure-on1hn1%sqna31$@a1+xce_=eky@+w75wpw7#nk*^vqrz9g86(7"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,9 +51,9 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'account.CustomUser'
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -66,18 +66,18 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 ROOT_URLCONF = "Recommender.urls"
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = os.path. join(BASE_DIR, 'staticfiles')
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": ['templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

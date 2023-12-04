@@ -1,0 +1,31 @@
+.data-part,
+.algo-choose {
+  margin-left: 20%;
+}
+
+.algo-choose form ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.algo-choose form li {
+  margin-bottom: 2%;
+}
+
+.algo-choose form input[type="radio"] {
+  margin-right: 2%;
+}
+
+button.algo-run-button {
+  margin-left: 60%; 
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+@media (max-width: 880px) {
+  .algo-choose,
+  button.algo-run-button {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

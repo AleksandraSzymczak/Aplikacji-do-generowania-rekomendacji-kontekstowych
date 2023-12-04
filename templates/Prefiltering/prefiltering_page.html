@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Differential Context Relaxation</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/navbar.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/utils.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styles-res.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/console.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/report.css' %}"
+    />
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dcr.js' %}"></script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <hr />
+    <div class="form-grid">
+      <div class="form-container-left"></div>
+      <div class="form-container-right">{% include 'console_log.html' %}</div>
+    </div>
+    <div id="reportContent">{% include 'report.html' %}</div>
+  </body>
+</html>

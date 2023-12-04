@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Menu</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/utils.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/data-page-style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/data-display.css' %}" />
+    <script type="text/javascript" src="{% static 'js/data-func.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <div>
+      <div class="main-header">
+        <h1>Your Data</h1>
+        <hr>
+    </div>
+    <div class="grid-container">
+      <div class="grid-item">
+          <div class="buttons-container-one">
+              <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <button type="submit">Upload</button>
+                  <input type="file" id="file" name="file" accept=".csv, .xlsx" required />
+                  <div>
+                      <label for="description">Description:</label>
+                      <input type="text" id="description" name="description" />
+                  </div>
+              </form>
+          </div>
+      </div>
+  
+      <div class="grid-item">
+          <div class="vertical-menu">
+              {% for plik in pliki %}
+                  <a>
+                      <input
+                          type="checkbox"
+                          id="{{ plik }}"
+                          name="c1_choices"
+                          value="{{ plik }}"
+                      />
+                      <label for="{{ plik }}">{{ plik }}</label>
+                  </a>
+              {% endfor %}
+          </div>
+      </div>
+      <script>
+        var csrfToken = "{{ csrf_token }}";
+    </script>
+      <div class="grid-item">
+          <div class="buttons-container-two">
+              <button onclick="deleteSelected()">delete</button>
+              <button onclick="downloadSelected()">download</button>
+              <button>transform</button>
+          </div>
+      </div>
+  </div>
+  </body>
+</html>

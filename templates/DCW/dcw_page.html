@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Differential Context Relaxation Algorytm</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles-dcr.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/dcw_style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/navbar.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/utils.css' %}"
+    />
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dcr.js' %}"></script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <div class="main-header">
+      <h1>Choose your context variables</h1>
+      <hr />
+    </div>
+    <form action="{% url 'Wyniki_DCW' %}" method="post">
+      {% csrf_token %}
+
+      <fieldset>
+        <legend>
+          C1 - Zmienna po której przeprowadzona zostanie selekcja sąsiadów
+        </legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c1_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label><br />
+        {% endfor %}
+      </fieldset>
+
+      <fieldset>
+        <legend>C2 - Zmienna decydująca o wkładzie sąsiadów</legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c2_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label>
+        <br />
+        {% endfor %}
+      </fieldset>
+
+      <fieldset>
+        <legend>C3 - Zmienna decydująca o linii bazowej użytkownika</legend>
+        {% for context_var in context_list %}
+        <input
+          type="checkbox"
+          id="{{ context_var }}"
+          name="c3_choices"
+          value="{{ context_var }}"
+        />
+        <label for="{{ context_var }}">{{ context_var }}</label><br />
+        {% endfor %}
+      </fieldset>
+      <fieldset>
+        <legend>Wybierz wagi zmiennych</legend>
+        {% for context_var in context_list %}
+        <div class="slidecontainer">
+          <label for="{{ context_var }}">{{ context_var }}</label>
+          <input
+            type="range"
+            id="{{ context_var }}"
+            name="{{ context_var }}_choices"
+            value="0"
+            min="0"
+            max="1"
+            step="0.1"
+            class="slider"
+            oninput="updateSliderValue(this, '{{ context_var }}')"
+          />
+          <p>
+            Value:
+            <span id="value_{{ context_var }}" name="value_{{ context_var }}"
+              >0.0</span
+            >
+          </p>
+          <br />
+        </div>
+        {% endfor %}
+        <input
+          type="hidden"
+          name="hidden_values"
+          id="hidden_values"
+          value="{}"
+        />
+      </fieldset>
+      <button type="submit" class="confirm">Confirm selection</button>
+    </form>
+  </body>
+</html>
