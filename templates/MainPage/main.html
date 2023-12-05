@@ -93,7 +93,7 @@
                   var selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
                   var selectedFiles = Array.from(document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
                   console.log("selectedFiles")
-                  if (selectedFiles.length > 0) {
+                  if (selectedFiles.length == 1) {
                     handleAlgorithmSelection(selectedAlgorithm, selectedFiles);
                   }
 

@@ -5,8 +5,11 @@ from .models import Files
 class FilesAdminForm(forms.ModelForm):
     class Meta:
         model = Files
-        fields = '__all__' 
+        fields = '__all__'
 
+    def clean_file(self):
+        file = self.cleaned_data['file']
+        return file
 
 class FilesAdmin(admin.ModelAdmin):
     form = FilesAdminForm

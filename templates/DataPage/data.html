@@ -63,7 +63,12 @@
               />
               <div>
                 <label for="description">Description:</label>
-                <input type="text" id="description" name="description" />
+                <select id="description" name="description">
+                    <option value="LOG">Log</option>
+                    <option value="BINARY">Binary</option>
+                    <option value="COMPACT">Compact</option>
+                    <option value="LOOSE">Loose</option>
+                </select>
               </div>
             </form>
           </div>

@@ -30,6 +30,7 @@ class FileUploadView(View):
         if form.is_valid():
             new_file = form.save(commit=False)
             new_file.user = request.user
+            new_file.description = request.POST.get('description')
             new_file.save()
             return redirect('Data_page')
         else:
