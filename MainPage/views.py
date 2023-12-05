@@ -4,7 +4,9 @@ from django.core.files.base import ContentFile
 from .forms import FileUploadForm
 from django.shortcuts import render, redirect
 from DataPage.views import Files
-from django.contrib import messages
+from django.http import JsonResponse
+from django.urls import reverse
+import json
 
 
 def home(request):
@@ -31,15 +33,26 @@ def upload_file(request):
 
 def recommend(request):
     if request.method == 'POST':
-        selected_algorithm = request.POST.get('algorithm', '')
-        print(f'Selected Algorithm: {selected_algorithm}')  # Add this line for debugging
+        try:
+            # Get the raw JSON data from the request body
+            data = json.loads(request.body.decode('utf-8'))
 
-        # Przekieruj na odpowiednią stronę w zależności od wyboru
-        if selected_algorithm == 'Prefiltering':
-            return redirect('prefiltering_page')
-        elif selected_algorithm == 'DCR':
-            return redirect('DCR_page')
-        elif selected_algorithm == 'DCW':
-            return redirect('DCW_page')
+            # Access the data using the keys
+            selected_algorithm = data.get('algorithm', '')
+            selected_files = data.get('selected_files', '')
+
+            print(f'Selected Algorithm: {selected_algorithm}, Selected Files: {selected_files}')
+
+            request.session['selected_files'] = selected_files
+            if selected_algorithm == 'Prefiltering':
+                return redirect('prefiltering_page')
+            elif selected_algorithm == 'DCR':
+                return redirect('DCR_page')
+            elif selected_algorithm == 'DCW':
+                return redirect('DCW_page')
+
+        except json.JSONDecodeError:
+            # Handle JSON decoding error
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
     return render(request, 'MainPage/main.html')

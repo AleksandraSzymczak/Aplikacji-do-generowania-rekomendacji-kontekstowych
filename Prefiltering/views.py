@@ -17,12 +17,10 @@ logger.setLevel(logging.INFO)
 
 
 def prefiltering_page(request):
-    #pierwszy_plik = UploadedFile.objects.first()
-    #file_path = pierwszy_plik.get_file_path()
-    #df = pd.read_csv(file_path) 
-    #column_list = df.columns
-    return render(request, 'Prefiltering/prefiltering_page.html', {'context_list': "column_list"})
-
+    file_param = request.session.get('selected_files')
+    file_obj = Files.objects.get(file=f"user_files/{file_param}", user=request.user)
+    df = pd.read_csv(file_obj.file.path)
+    return render(request, 'Prefiltering/prefiltering_page.html')
 
 def Wyniki_prefiltering(request):
     if request.method == 'POST':

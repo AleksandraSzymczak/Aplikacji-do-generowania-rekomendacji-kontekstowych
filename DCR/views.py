@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from MainPage.models import UploadedFile
 from .forms import UserChoicesForm
+from DataPage.models import Files
 import pandas as pd
 import json
 import logging
@@ -17,7 +18,11 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def DCR_page(request):
-    return render(request, 'DCR/dcr_page.html', {'context_list': ["context_var_list"]})
+    file_param = request.session.get('selected_files')
+    file_obj = Files.objects.get(file=f"user_files/{file_param}", user=request.user)
+    df = pd.read_csv(file_obj.file.path)
+    context_var_list = df.columns[3:].values.tolist()
+    return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list})
 
 
 def Wyniki(request):

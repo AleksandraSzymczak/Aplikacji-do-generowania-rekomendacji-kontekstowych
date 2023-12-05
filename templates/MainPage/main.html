@@ -28,7 +28,7 @@
           <hr>
         </div>
         <div class="algo-choose">
-          <form method="post" action="/mainpage/wybor_algorytmu/" enctype="multipart/form-data">
+          <form method="post" id="wybor_algorytmu" action="wybor_algorytmu/">
             {% csrf_token %}
             <ul>
               <li>
@@ -92,8 +92,11 @@
   
                   var selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
                   var selectedFiles = Array.from(document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-                  
-                  handleAlgorithmSelection(selectedAlgorithm, selectedFiles);
+                  console.log("selectedFiles")
+                  if (selectedFiles.length > 0) {
+                    handleAlgorithmSelection(selectedAlgorithm, selectedFiles);
+                  }
+
               });
           }
       });

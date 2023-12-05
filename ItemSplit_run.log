@@ -1,16 +1,1 @@
-2023-12-04 15:51:16,364 Not Found: /static/styles-res.css
-2023-12-04 15:51:16,423 Not Found: /static/styles-res.css
-2023-12-04 15:51:39,213 START
-2023-12-04 15:51:39,213 <WSGIRequest: GET '/prefiltering/Wyniki_prefiltering/simulate_long_running_process/'>
-2023-12-04 15:51:39,277 Index(['User', ' Item', ' Rating', ' time:weekend', ' time:weekday',
-       ' location:cinema', ' companion:family', ' companion:partner'],
-      dtype='object')
-2023-12-04 15:51:39,511 {'mae': 2.0555555555555554, 'rmse': 2.8382310609877335, 'recall_result': 1.0}
-2023-12-04 15:52:14,510 Not Found: /static/styles-res.css
-2023-12-04 15:52:14,579 Not Found: /static/styles-res.css
-2023-12-04 15:52:15,915 START
-2023-12-04 15:52:15,915 <WSGIRequest: GET '/prefiltering/Wyniki_prefiltering/simulate_long_running_process/'>
-2023-12-04 15:52:15,919 Index(['User', ' Item', ' Rating', ' time:weekend', ' time:weekday',
-       ' location:cinema', ' companion:family', ' companion:partner'],
-      dtype='object')
-2023-12-04 15:52:15,956 {'mae': 2.0555555555555554, 'rmse': 2.8382310609877335, 'recall_result': 1.0}
+2023-12-05 20:41:45,159 Not Found: /static/styles-res.css

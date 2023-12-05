@@ -18,11 +18,10 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def DCW_page(request):
-    current_user = request.user
-    ostatni_plik = Files.objects.filter(user=current_user).order_by('-uploaded_at').first()
-    file_path = ostatni_plik.file.path
-    data = pd.read_csv(file_path)
-    context_var_list = data.columns[3:].tolist()
+    file_param = request.session.get('selected_files')
+    file_obj = Files.objects.get(file=f"user_files/{file_param}", user=request.user)
+    df = pd.read_csv(file_obj.file.path)
+    context_var_list = df.columns[3:].values.tolist()
     return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list})
 
 
