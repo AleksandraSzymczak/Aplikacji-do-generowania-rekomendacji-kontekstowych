@@ -12,7 +12,7 @@ urlpatterns = [
     path('mainpage/prefiltering/', include('Prefiltering.urls')),
     path('mainpage/DCR/', include('DCR.urls')),
     path('mainpage/DCW/', include('DCW.urls')),
-    path('mainpage/', authentication_classes([JWTAuthentication])(permission_classes([IsAuthenticated])(HomeView.as_view())), name='home'),
+    path('mainpage/', HomeView.as_view(), name='home'),
     #path('upload/', upload_file, name='upload_file'),
     path('mainpage/wybor_algorytmu/', recommend, name='wybor_algorytmu'),
 ]
