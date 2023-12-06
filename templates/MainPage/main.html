@@ -1,105 +1,15 @@
-{% load static %}
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Menu</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/utils.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/data-display.css' %}" />
-    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
-    <body>
-    {% include 'navbar.html' %}
-    <section>
-        <div class="main-header">
-            <h1>Choose your data</h1>
-            <hr>
-            {% include 'data_display.html' %}
-        </div>
-        
-      <div>
-        <div class="main-header">
-          <h1>Choose your algorithm</h1>
-          <hr>
-        </div>
-        <div class="algo-choose">
-          <form method="post" id="wybor_algorytmu" action="wybor_algorytmu/">
-            {% csrf_token %}
-            <ul>
-              <li>
-                <input
-                  type="radio"
-                  id="prefiltering"
-                  name="algorithm"
-                  value="Prefiltering"
-                />
-                <label for="prefiltering" title="Hint for Prefiltering"
-                  >Prefiltering</label
-                >
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="context_relaxation"
-                  name="algorithm"
-                  value="DCR"
-                />
-                <label
-                  for="context_relaxation"
-                  title="Hint for Differential Context Relaxation"
-                  >Differential Context Relaxation</label
-                >
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="context_weighting"
-                  name="algorithm"
-                  value="DCW"
-                />
-                <label
-                  for="context_weighting"
-                  title="Hint for Differential context weighting"
-                  >Differential context weighting</label
-                >
-              </li>
-            </ul>
-        </div>
-            <button type="submit" class="algo-run-button">
-            Run Recommendation Steps
-            </button>
-        </form>
-    </section>
-    <hr>
     <div>
       <p>
         All mentioned algorithms are described in the Algorithms info tab. If
         you want to add data to your account, go to the resource tab.
       </p>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          var form = document.getElementById('wybor_algorytmu');
-  
-          if (form) {
-              form.addEventListener('submit', function (event) {
-                  event.preventDefault();
-  
-                  var selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
-                  var selectedFiles = Array.from(document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-                  console.log("selectedFiles")
-                  if (selectedFiles.length == 1) {
-                    handleAlgorithmSelection(selectedAlgorithm, selectedFiles);
-                  }
-
-              });
-          }
-      });
-  </script>
   </body>
 </html>
