@@ -27,6 +27,54 @@
           <h1>Choose your algorithm</h1>
           <hr>
         </div>
+        <div class="algo-choose">
+          <form method="post" id="wybor_algorytmu" action="wybor_algorytmu/">
+            {% csrf_token %}
+            <ul>
+              <li>
+                <input
+                  type="radio"
+                  id="prefiltering"
+                  name="algorithm"
+                  value="Prefiltering"
+                />
+                <label for="prefiltering" title="Hint for Prefiltering"
+                  >Prefiltering</label
+                >
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="context_relaxation"
+                  name="algorithm"
+                  value="DCR"
+                />
+                <label
+                  for="context_relaxation"
+                  title="Hint for Differential Context Relaxation"
+                  >Differential Context Relaxation</label
+                >
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="context_weighting"
+                  name="algorithm"
+                  value="DCW"
+                />
+                <label
+                  for="context_weighting"
+                  title="Hint for Differential context weighting"
+                  >Differential context weighting</label
+                >
+              </li>
+            </ul>
+        </div>
+            <button type="submit" class="algo-run-button">
+            Run Recommendation Steps
+            </button>
+        </form>
+    </section>
     <hr>
     <div>
       <p>
