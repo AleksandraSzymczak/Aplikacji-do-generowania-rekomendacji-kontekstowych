@@ -83,6 +83,7 @@ def transform(request):
     if request.method == 'POST':
         option_value = request.POST.get('option_value')
         file_Ids = request.POST.get('file_Ids')
+        print("OOOOOOOOOOOOOOO")
         if option_value == "binary":
             pass
         if option_value == "comact":

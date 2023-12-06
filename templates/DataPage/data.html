@@ -64,70 +64,73 @@
               <div>
                 <label for="description">Description:</label>
                 <select id="description" name="description">
-                    <option value="LOG">Log</option>
-                    <option value="BINARY">Binary</option>
-                    <option value="COMPACT">Compact</option>
-                    <option value="LOOSE">Loose</option>
+                  <option value="LOG">Log</option>
+                  <option value="BINARY">Binary</option>
+                  <option value="COMPACT">Compact</option>
+                  <option value="LOOSE">Loose</option>
                 </select>
               </div>
             </form>
           </div>
         </div>
 
-        <div class="grid-item">
-            {% include 'data_display.html' %}
-        </div>
+        <div class="grid-item">{% include 'data_display.html' %}</div>
         <script>
           var csrfToken = "{{ csrf_token }}";
         </script>
         <div class="grid-item">
-            <div class="buttons-container-two">
-                <button onclick="deleteSelected()">delete</button>
-                <button onclick="downloadSelected()">download</button>
-                <div class="dropdown">
-                  <button>transform</button>
-                  <div class="dropdown-content">
-                    <a href="binary">binary</a>
-                    <a href="comact">compact</a>
-                    <a href="loose">loose</a>
-                  </div>
-                </div>
+          <div class="buttons-container-two">
+            <button onclick="deleteSelected()">delete</button>
+            <button onclick="downloadSelected()">download</button>
+            <div class="dropdown">
+              <button>transform</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="binary">binary</a>
+                <a href="compact">compact</a>
+                <a href="loose">loose</a>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <script>
-      $(document).ready(function() {
+      $(document).ready(function () {
         // Znajdź wszystkie linki w dropdownie
-        $('.dropdown-content a').on('click', function(e) {
+        $(".dropdown-content a").on("click", function (e) {
           // Zatrzymaj domyślne zachowanie linku
           e.preventDefault();
-          var selectedFiles = document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked');
-    
-          if (selectedFiles.length > 0) {
-            var fileIds = Array.from(selectedFiles).map(checkbox => checkbox.value);
+          var selectedFiles = document.querySelectorAll(
+            '.vertical-menu input[type="checkbox"]:checked'
+          );
+
+          if (selectedFiles.length == 1) {
+            var fileIds = Array.from(selectedFiles).map(
+              (checkbox) => checkbox.value
+            );
             // Pobierz wartość z atrybutu href (adres URL)
-            var optionValue = $(this).attr('href');
-            var token = localStorage.getItem('access_token');
-            var csrfToken = $('[name=csrfmiddlewaretoken]').val();
+            var optionValue = $(this).attr("href");
+            var token = localStorage.getItem("access_token");
+            var csrfToken = $("[name=csrfmiddlewaretoken]").val();
             // Wywołaj funkcję Django za pomocą AJAX
             $.ajax({
-              url: 'handle_option_click/',  // Zmień na odpowiednią ścieżkę URL
-              method: 'POST',  // Lub GET w zależności od Twoich potrzeb
+              url: "handle_option_click/", // Zmień na odpowiednią ścieżkę URL
+              method: "POST", // Lub GET w zależności od Twoich potrzeb
               headers: {
-                "Authorization": "Bearer " + token,
-                "X-CSRFToken": csrfToken
+                Authorization: "Bearer " + token,
+                "X-CSRFToken": csrfToken,
               },
-              data: { option_value: optionValue , file_Ids: fileIds},
-              success: function(response) {
-                console.log('Server response:', response);
+              data: { option_value: optionValue, file_Ids: fileIds },
+              success: function (response) {
+                console.log("Server response:", response);
                 // Tutaj możesz obsłużyć odpowiedź z serwera
               },
-              error: function(error) {
-                console.error('AJAX error:', error);
-              }
+              error: function (error) {
+                console.error("AJAX error:", error);
+              },
             });
           }
-          });
+        });
       });
     </script>
   </body>

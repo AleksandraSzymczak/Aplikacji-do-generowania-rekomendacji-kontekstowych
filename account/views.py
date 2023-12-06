@@ -4,12 +4,14 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from rest_framework_simplejwt.views import TokenRefreshView
 from DataPage.views import Files
 
+
 def register(request):
     return render(request, 'account/login.html', )
+
 
 @api_view(['POST'])
 def register2(request):
@@ -42,5 +44,3 @@ def getRoutes(request):
         'token/refresh',
     ]
     return Response(routes)
-
-

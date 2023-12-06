@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-on1hn1%sqna31$@a1+xce_=eky@+w75wpw7#nk*^vqrz9g86(7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['contextrecommendationapp.azurewebsites.net']
 
 
 # Application definition
@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     "DataPage",
     "account",
     "Docs",
-    'corsheaders'
+    'corsheaders',
+    'whitenoise.runserver_nostatic'
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'
@@ -66,7 +67,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
 ]
-
+CSRF_TRUSTED_ORIGINS = ['https://contextrecommendationapp.azurewebsites.net']
 ROOT_URLCONF = "Recommender.urls"
 
 STATIC_URL = '/static/'
@@ -74,6 +75,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_ROOT = os.path. join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = ('whitenoise.storage.CompressedManifestStaticFilesStorage')
 
 TEMPLATES = [
     {
@@ -134,7 +136,7 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_LIFETIME": timedelta(seconds=3),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
