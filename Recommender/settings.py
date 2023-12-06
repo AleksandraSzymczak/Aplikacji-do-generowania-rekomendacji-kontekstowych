@@ -65,7 +65,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
-    'https://contextrecommendationapp.azurewebsites.net/'
+    #'https://contextrecommendationapp.azurewebsites.net/'
 ]
 
 ROOT_URLCONF = "Recommender.urls"
