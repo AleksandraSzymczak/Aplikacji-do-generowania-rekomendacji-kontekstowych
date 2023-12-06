@@ -14,11 +14,11 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class HomeView(View):
     def get(self, request):
-        current_user = request.user
-        pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
-        substring_to_remove = "user_files/"
-        result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
-        return render(request, 'MainPage/main.html', {'pliki': result_list})
+        #current_user = request.user
+        #pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
+        #substring_to_remove = "user_files/"
+        #result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
+        return render(request, 'MainPage/main.html')#, #{'pliki': result_list})
 
 
 
