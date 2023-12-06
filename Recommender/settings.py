@@ -65,7 +65,6 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
-    #'https://contextrecommendationapp.azurewebsites.net/'
 ]
 
 ROOT_URLCONF = "Recommender.urls"
@@ -135,7 +134,7 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(seconds=3),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
@@ -148,7 +147,7 @@ SIMPLE_JWT = {
 
 
 WSGI_APPLICATION = "Recommender.wsgi.application"
-CSRF_TRUSTED_ORIGINS = ['https://swbobackend.azurewebsites.net']
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
