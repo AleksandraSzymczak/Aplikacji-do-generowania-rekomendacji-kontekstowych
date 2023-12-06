@@ -65,6 +65,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
+    'https://contextrecommendationapp.azurewebsites.net/'
 ]
 
 ROOT_URLCONF = "Recommender.urls"
@@ -147,7 +148,7 @@ SIMPLE_JWT = {
 
 
 WSGI_APPLICATION = "Recommender.wsgi.application"
-
+CSRF_TRUSTED_ORIGINS = ['https://swbobackend.azurewebsites.net']
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
