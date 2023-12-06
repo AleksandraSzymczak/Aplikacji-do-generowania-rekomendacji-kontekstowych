@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class HomeView(View, LoginRequiredMixin):
     def get(self, request):
-        current_user = request.user
+        current_user = request.user.id
         pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
         substring_to_remove = "user_files/"
         result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
