@@ -19,7 +19,7 @@ class HomeView(View):
         files = Files.objects.filter(user_id=current_user).order_by('-uploaded_at')
         file_des_dict = {file.file_name: file.description for file in files}
         print(file_des_dict)
-        return render(request, 'MainPage/main.html', {'pliki_dict': file_des_dict})
+        return render(request, 'MainPage/main.html', {'pliki_dict': "file_des_dict"})
 
 
 def upload_file(request):
