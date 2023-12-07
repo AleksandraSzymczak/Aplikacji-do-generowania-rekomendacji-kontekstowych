@@ -150,7 +150,7 @@ SIMPLE_JWT = {
 
 
 WSGI_APPLICATION = "Recommender.wsgi.application"
-#CSRF_TRUSTED_ORIGINS = ['https://contextrecommendationapp.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://contextrecommendationapp.azurewebsites.net']
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
