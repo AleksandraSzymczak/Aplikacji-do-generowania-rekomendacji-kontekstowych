@@ -77,3 +77,14 @@ else {
     alert('Select at least one file to download.');
 }
 }
+function getFileDetails() {
+    var fileInput = document.getElementById('file_content');
+    var fileNameInput = document.getElementById('file_name');
+
+    if (fileInput.files.length > 0) {
+        var fileName = fileInput.files[0].name;
+
+        fileNameInput.value = fileName;
+    }
+    return true;
+}

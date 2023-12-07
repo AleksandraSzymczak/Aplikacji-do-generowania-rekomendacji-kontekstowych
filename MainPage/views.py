@@ -16,11 +16,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class HomeView(View, LoginRequiredMixin):
     def get(self, request):
         current_user = request.user
-        pliki = Files.objects.filter(user=current_user).order_by('-uploaded_at').values_list('file', flat=True)
-        substring_to_remove = "user_files/"
-        result_list = [full_path.replace(substring_to_remove, "", 1) for full_path in pliki] 
-        return render(request, 'MainPage/main.html', {'pliki': result_list})
-
+        print(current_user)
+        files = Files.objects.filter(user=current_user).order_by('-uploaded_at')
+        file_des_dict = {file.file_name: file.description for file in files}
+        print(file_des_dict)
+        return render(request, 'MainPage/main.html', {'pliki_dict': file_des_dict})
 
 
 def upload_file(request):

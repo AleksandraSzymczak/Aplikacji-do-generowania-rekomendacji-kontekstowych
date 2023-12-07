@@ -51,14 +51,22 @@
               action="{% url 'upload_file' %}"
               method="post"
               enctype="multipart/form-data"
+              onsubmit="getFileDetails();"
             >
               {% csrf_token %}
               <button type="submit">Upload</button>
               <input
                 type="file"
-                id="file"
-                name="file"
+                id="file_content"
+                name="file_content"
                 accept=".csv, .xlsx"
+                required
+              />
+              <input
+                type="text"
+                id="file_name"
+                name="file_name"
+                placeholder="Enter file name"
                 required
               />
               <div>

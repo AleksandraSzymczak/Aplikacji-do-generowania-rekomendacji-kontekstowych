@@ -1,11 +1,8 @@
 <div class="vertical-menu">
-    {% for plik in pliki %}
-        <a>
-            <input
-                type="checkbox"
-                value="{{ plik }}"
-            />
-            <label "{{ plik }}">{{ plik }}</label>
-        </a>
-    {% endfor %}
+  {% for plik, description in pliki_dict.items %}
+  <a>
+    <input type="checkbox" value="{{ plik }}" />
+    <label for="{{ plik }}">{{ plik }} [{{ description|lower }}]</label>
+  </a>
+  {% endfor %}
 </div>

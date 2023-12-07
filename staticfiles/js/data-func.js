@@ -28,46 +28,63 @@ function deleteSelected() {
     }
 }
 
-
 function downloadSelected() {
-    var selectedFiles = document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked');
+var selectedFiles = document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked');
+
+if (selectedFiles.length > 0) {
+    var fileIds = Array.from(selectedFiles).map(checkbox => checkbox.value);
+    var token = localStorage.getItem('access_token');
     
-    if (selectedFiles.length > 0) {
-        var fileIds = Array.from(selectedFiles).map(checkbox => checkbox.value);
-        var token = localStorage.getItem('access_token');
-        
-        console.log("Token:", token);
-        console.log("File IDs:", fileIds);
+    console.log("Token:", token);
+    console.log("File IDs:", fileIds);
 
-        // Create a hidden anchor element to trigger file downloads
-        var anchor = document.createElement('a');
-        anchor.style.display = 'none';
-        document.body.appendChild(anchor);
+    // Create a hidden anchor element to trigger file downloads
+    var anchor = document.createElement('a');
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
 
-        // Fetch files and trigger download
-        fileIds.forEach(fileId => {
-            fetch(`/data/download/${fileId}/`, {
-                method: 'GET',
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "X-CSRFToken": csrfToken
-                }
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                // Create a download link
-                var url = window.URL.createObjectURL(blob);
-                anchor.href = url;
-                anchor.download = `${fileId}`;
-                anchor.click();
-                window.URL.revokeObjectURL(url);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    // Fetch files and trigger download
+    fileIds.forEach(fileId => {
+        fetch(`/data/download/${fileId}/`, {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer " + token,
+                "X-CSRFToken": csrfToken
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create a link element and trigger download
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `file_${fileId}.txt`; // Set the desired filename
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch(error => {
+            console.error('Error during file download:', error);
         });
+    });
+}
+else {
+    alert('Select at least one file to download.');
+}
+}
+function getFileDetails() {
+    var fileInput = document.getElementById('file_content');
+    var fileNameInput = document.getElementById('file_name');
+
+    if (fileInput.files.length > 0) {
+        var fileName = fileInput.files[0].name;
+
+        fileNameInput.value = fileName;
     }
-    else {
-        alert('Select at least one file to download.');
-    }
+    return true;
 }
