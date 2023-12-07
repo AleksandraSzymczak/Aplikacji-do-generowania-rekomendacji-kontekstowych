@@ -62,11 +62,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-#SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
+    'https://contextrecommendationapp.azurewebsites.net'
 ]
 
 ROOT_URLCONF = "Recommender.urls"
