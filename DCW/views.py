@@ -8,7 +8,7 @@ import logging
 from DataPage.models import Files
 from utils.recommendations import Recommender
 from django.http import JsonResponse
-
+import io
 
 logging.basicConfig(filename="ItemSplit_run.log",
                     format='%(asctime)s %(message)s',
@@ -19,8 +19,14 @@ logger.setLevel(logging.INFO)
 
 def DCW_page(request):
     file_param = request.session.get('selected_files')
-    file_obj = Files.objects.get(file=f"user_files/{file_param}", user=request.user)
-    df = pd.read_csv(file_obj.file.path)
+    print(file_param)
+    file_obj = Files.objects.get(file_name=file_param, user=request.user)
+    print(file_obj)
+    file_content = file_obj.file_content
+    file_content_bytesio = io.BytesIO(file_content)
+
+    # Read the BytesIO object into a pandas DataFrame
+    df = pd.read_csv(file_content_bytesio)
     context_var_list = df.columns[3:].values.tolist()
     return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list})
 

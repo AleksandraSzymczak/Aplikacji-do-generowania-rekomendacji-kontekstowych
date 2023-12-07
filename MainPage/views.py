@@ -51,6 +51,7 @@ def recommend(request):
 
             request.session['selected_files'] = selected_files
             if selected_algorithm == 'Prefiltering':
+                print("jestem")
                 return redirect('prefiltering_page')
             elif selected_algorithm == 'DCR':
                 return redirect('DCR_page')

@@ -82,6 +82,24 @@
         you want to add data to your account, go to the resource tab.
       </p>
     </div>
-    <label >{{ user_id }} </label>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          var form = document.getElementById('wybor_algorytmu');
+  
+          if (form) {
+              form.addEventListener('submit', function (event) {
+                  event.preventDefault();
+  
+                  var selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked').value;
+                  var selectedFiles = Array.from(document.querySelectorAll('.vertical-menu input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+                  console.log("selectedFiles")
+                  if (selectedFiles.length == 1) {
+                    handleAlgorithmSelection(selectedAlgorithm, selectedFiles);
+                  }
+
+              });
+          }
+      });
+  </script>
   </body>
 </html>

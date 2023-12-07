@@ -1,5 +1,5 @@
 function handleAlgorithmSelection(selectedAlgorithm, selectedFiles) {
-    var token = localStorage.getItem('access_token');
+    //var token = localStorage.getItem('access_token');
     var csrfToken = $('[name=csrfmiddlewaretoken]').val();
     
     console.log(selectedAlgorithm);
@@ -17,7 +17,7 @@ function handleAlgorithmSelection(selectedAlgorithm, selectedFiles) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token,
+            //'Authorization': 'Bearer ' + token,
             'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({

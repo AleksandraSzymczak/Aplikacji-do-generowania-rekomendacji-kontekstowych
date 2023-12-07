@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from utils.recommendations import Recommender
 from DataPage.models import Files
 from django.contrib.auth.decorators import login_required
-
+import io
 
 logging.basicConfig(filename="ItemSplit_run.log",
                     format='%(asctime)s %(message)s',
@@ -18,8 +18,16 @@ logger.setLevel(logging.INFO)
 
 def prefiltering_page(request):
     file_param = request.session.get('selected_files')
-    file_obj = Files.objects.get(file=f"user_files/{file_param}", user=request.user)
-    df = pd.read_csv(file_obj.file.path)
+    print(file_param)
+    file_obj = Files.objects.get(file_name=file_param, user=request.user)
+    print(file_obj)
+    file_content = file_obj.file_content
+    file_content_bytesio = io.BytesIO(file_content)
+
+    # Read the BytesIO object into a pandas DataFrame
+    df = pd.read_csv(file_content_bytesio)
+    col = df.columns
+    print(col)
     return render(request, 'Prefiltering/prefiltering_page.html')
 
 def Wyniki_prefiltering(request):
