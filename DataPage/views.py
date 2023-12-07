@@ -52,9 +52,9 @@ class FileDeleteView(View):
         return JsonResponse({'deleted_files': deleted_files})
 
 def Data_page(request):
-    current_user = request.user
+    current_user = request.user.id
     print(current_user)
-    files = Files.objects.filter(user=current_user).order_by('-uploaded_at')
+    files = Files.objects.filter(user_id=current_user).order_by('-uploaded_at')
     file_des_dict = {file.file_name: file.description for file in files}
     print(file_des_dict)
     return render(request, 'DataPage/data.html', {'pliki_dict': file_des_dict})
