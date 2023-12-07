@@ -13,17 +13,14 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.mixins import LoginRequiredMixin
 from account.models import CustomUser
 
-class HomeView(View, LoginRequiredMixin):
+class HomeView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            current_user = CustomUser.objects.get(pk=request.user.id)
-            print(current_user)
-            files = Files.objects.filter(user_id=current_user).order_by('-uploaded_at')
-            file_des_dict = {file.file_name: file.description for file in files}
-            print(file_des_dict)
-            return render(request, 'MainPage/main.html', {'pliki_dict': file_des_dict})
-        else:
-            return redirect('register')
+        current_user = CustomUser.objects.get(pk=request.user.id)
+        print(current_user)
+        files = Files.objects.filter(user_id=current_user).order_by('-uploaded_at')
+        file_des_dict = {file.file_name: file.description for file in files}
+        print(file_des_dict)
+        return render(request, 'MainPage/main.html', {'pliki_dict': file_des_dict})
 
 
 def upload_file(request):
