@@ -16,6 +16,7 @@ from account.models import CustomUser
 class HomeView(View):
     def get(self, request):
         current_user = request.user.id
+        print(current_user)
         files = Files.objects.filter(user_id=current_user).order_by('-uploaded_at')
         file_des_dict = {file.file_name: file.description for file in files}
         print(file_des_dict)

@@ -42,7 +42,7 @@ class FileDeleteView(View):
 
         for file_id in file_ids:
             try:
-                file_to_delete = Files.objects.get(id=file_id, user=request.user.id)
+                file_to_delete = Files.objects.get(file_name=file_id, user=request.user)
                 print("Deleting file:", file_to_delete)
                 file_to_delete.delete()
                 deleted_files.append(file_id)
@@ -62,7 +62,7 @@ def Data_page(request):
 
 class FileDownloadView(View):
     def get(self, request, file_id):
-        file_object = get_object_or_404(Files, id=file_id, user=request.user.id)
+        file_object = get_object_or_404(Files, file_name=file_id, user=request.user.id)
         response = HttpResponse(file_object.file_content, content_type='application/octet-stream')
         response['Content-Disposition'] = f'attachment; filename="{file_object.file_name}"'
         return response

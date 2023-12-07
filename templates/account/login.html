@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,51 +10,12 @@
   <body>
     <div class="login-container">
       <h2>Login</h2>
-      <form
-        class="login-form"
-        action="{% url 'token_obtain_pair' %}"
-        method="post"
-      >
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
-        </div>
+      <form class="login-form" method="post" action="{% url 'login' %}">
+        {% csrf_token %} {{ form.as_p }}
         <div class="form-group">
           <button type="submit">Login</button>
         </div>
       </form>
     </div>
-    <script>
-      const form = document.querySelector(".login-form");
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        var token = localStorage.getItem("access_token");
-        var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0]
-          .value;
-        const formData = new FormData(form);
-        const response = await fetch("{% url 'token_obtain_pair' %}", {
-          method: "POST",
-          Authorization: "Bearer " + token,
-          "X-CSRFToken": csrfToken,
-          body: formData,
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem("access_token", data.access);
-          localStorage.setItem("refresh_token", data.refresh);
-          window.location.href = "/mainpage/"; // Redirect to home page
-        } else {
-          // Handle login error
-          console.error("Login failed");
-        }
-      });
-    </script>
   </body>
 </html>
