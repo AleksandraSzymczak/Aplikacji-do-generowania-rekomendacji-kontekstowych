@@ -28,14 +28,14 @@
         </div>
       </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       const form = document.querySelector(".login-form");
 
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         var token = localStorage.getItem("access_token");
-        var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+        var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0]
+          .value;
         const formData = new FormData(form);
         const response = await fetch("{% url 'token_obtain_pair' %}", {
           method: "POST",
