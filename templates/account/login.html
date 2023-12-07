@@ -33,10 +33,13 @@
 
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
-
+        var token = localStorage.getItem("access_token");
+        var csrfToken = $("[name=csrfmiddlewaretoken]").val();
         const formData = new FormData(form);
         const response = await fetch("{% url 'token_obtain_pair' %}", {
           method: "POST",
+          Authorization: "Bearer " + token,
+          "X-CSRFToken": csrfToken,
           body: formData,
         });
 
