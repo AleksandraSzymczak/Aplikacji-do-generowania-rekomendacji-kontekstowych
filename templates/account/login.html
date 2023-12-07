@@ -28,6 +28,7 @@
         </div>
       </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
       const form = document.querySelector(".login-form");
 
@@ -47,7 +48,7 @@
           const data = await response.json();
           localStorage.setItem("access_token", data.access);
           localStorage.setItem("refresh_token", data.refresh);
-          window.location.href = "{% url 'home' %}"; // Redirect to home page
+          window.location.href = "/mainpage/"; // Redirect to home page
         } else {
           // Handle login error
           console.error("Login failed");
