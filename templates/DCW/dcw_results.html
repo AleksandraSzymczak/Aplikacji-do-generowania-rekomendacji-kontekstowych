@@ -18,7 +18,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'styles-res.css' %}"
+      href="{% static 'css/styles-res.css' %}"
     />
     <link
       rel="stylesheet"
@@ -71,5 +71,6 @@
       <div class="form-container-right">{% include 'console_log.html' %}</div>
     </div>
     <div id="reportContent">{% include 'report.html' %}</div>
+    <div id="fileCont" data-file="{{ file }}"></div>
   </body>
 </html>

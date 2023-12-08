@@ -29,7 +29,7 @@ def DCR_page(request):
     # Read the BytesIO object into a pandas DataFrame
     df = pd.read_csv(file_content_bytesio)
     context_var_list = df.columns[3:].values.tolist()
-    return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list})
+    return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list, 'file':file_param})
 
 
 def Wyniki(request):
@@ -37,6 +37,8 @@ def Wyniki(request):
         c1_choices_list = request.POST.getlist('c1_choices')
         c2_choices_list = request.POST.getlist('c2_choices')
         c3_choices_list = request.POST.getlist('c3_choices')
+
+        file_cont_value = request.POST.get('fileCont')
 
         c1_choices_json = json.dumps(c1_choices_list)
         c2_choices_json = json.dumps(c2_choices_list)
@@ -55,7 +57,7 @@ def Wyniki(request):
     else:
         form = UserChoicesForm()
 
-    return render(request, 'DCR/dcr_results.html', {'form': form})
+    return render(request, 'DCR/dcr_results.html', {'form': form, 'file': file_cont_value})
 
 
 def simulate_long_running_process(request):

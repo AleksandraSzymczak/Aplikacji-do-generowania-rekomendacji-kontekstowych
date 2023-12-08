@@ -28,7 +28,7 @@ def DCW_page(request):
     # Read the BytesIO object into a pandas DataFrame
     df = pd.read_csv(file_content_bytesio)
     context_var_list = df.columns[3:].values.tolist()
-    return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list})
+    return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list, 'file':file_param})
 
 
 def Wyniki_DCW(request):
@@ -39,6 +39,7 @@ def Wyniki_DCW(request):
         c2_choices_list = request.POST.getlist('c2_choices')
         c3_choices_list = request.POST.getlist('c3_choices')
 
+        file_cont_value = request.POST.get('fileCont')
         weights_json = json.loads(weights_dict)
 
         c1_choices_json = json.dumps(c1_choices_list)
@@ -58,4 +59,4 @@ def Wyniki_DCW(request):
     else:
         form = UserChoicesForm()
 
-    return render(request, 'DCW/dcw_results.html', {'form': form, 'weights': weights_json})
+    return render(request, 'DCW/dcw_results.html', {'form': form, 'weights': weights_json, 'file': file_cont_value})
