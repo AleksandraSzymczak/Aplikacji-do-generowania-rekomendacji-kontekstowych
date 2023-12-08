@@ -18,7 +18,10 @@
 .buttons-container-one{
     margin-left: auto;
 }
-
+form {
+  margin-left: 40%;
+  padding-right: 10%;
+}
 .buttons-container-two button,
 .buttons-container-one button{
     margin-bottom: 2%;
