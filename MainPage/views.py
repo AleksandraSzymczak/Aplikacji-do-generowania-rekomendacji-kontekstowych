@@ -10,9 +10,12 @@ import json
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from account.models import CustomUser
 
+
+@method_decorator(login_required, name='get')
 class HomeView(View):
     def get(self, request):
         current_user = request.user.id

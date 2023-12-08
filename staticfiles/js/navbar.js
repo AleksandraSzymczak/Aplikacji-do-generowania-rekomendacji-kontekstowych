@@ -19,8 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function logoutFunction() {
     console.log("LOGOUT");
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    window.location.href = "/";
+    //localStorage.removeItem('access_token');
+    //localStorage.removeItem('refresh_token');
+    //window.location.href = "/";
+    window.location.href = "{% url 'login' %}";
 
   }
