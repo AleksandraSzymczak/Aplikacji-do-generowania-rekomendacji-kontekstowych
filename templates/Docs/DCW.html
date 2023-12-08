@@ -22,8 +22,30 @@
     />
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      figure img {
+        max-width: 40%;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
     {% include 'navbar.html' %}
+    <h1>Differential Context Weighting</h1>
+    <h4>
+      Algorytm zaimplementowany na podstawie artykułów:
+      <br />
+      "Recommendation with Differential Context Weighting" - Yong Zheng, Robin
+      Burke, and Bamshad Mobasher,
+    </h4>
+    <p>
+      <figure>
+        <img src="{% static 'images/wzor_DCW.png' %}" />
+        <figcaption>
+          UBCF+DCR User-based collaborative Filtering recommendation Resnick’s
+          algorithm with Context Relaxation
+        </figcaption>
+      </figure>
+    </p>
   </body>
 </html>

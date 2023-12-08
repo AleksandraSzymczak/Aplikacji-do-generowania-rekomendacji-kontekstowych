@@ -22,8 +22,33 @@
     />
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+      figure img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
     {% include 'navbar.html' %}
+    <h1>Differential Context Relaxation</h1>
+    <h4>
+      Algorytm zaimplementowany na podstawie artykułów:
+      <br />
+      "Differential Context Relaxation for Context-Aware Travel Recommendation"
+      - Yong Zheng, Robin Burke, and Bamshad Mobasher,
+      <br />
+      "Optimal Feature Selection for Context-Aware Recommendation using
+      Differential Relaxation" - Yong Zheng, Robin Burke, and Bamshad Mobasher
+    </h4>
+    <p>
+      <figure>
+        <img src="{% static 'images/wzor_DCR.png' %}" />
+        <figcaption>
+          UBCF+DCR User-based collaborative Filtering recommendation Resnick’s
+          algorithm with Context Relaxation
+        </figcaption>
+      </figure>
+    </p>
   </body>
 </html>

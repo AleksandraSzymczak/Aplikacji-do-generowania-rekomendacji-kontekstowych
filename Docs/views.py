@@ -12,7 +12,7 @@ def prefiltering(request):
     return render(request, 'Docs/Prefiltering_doc.html')
 
 def DCR(request):
-    return render(request, 'Docs/Prefiltering_doc.html')
+    return render(request, 'Docs/DCR.html')
 
 def DCW(request):
-    return render(request, 'Docs/Prefiltering_doc.html')
+    return render(request, 'Docs/DCW.html')
