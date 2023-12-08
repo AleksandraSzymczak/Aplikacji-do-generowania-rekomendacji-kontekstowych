@@ -22,7 +22,10 @@ class FileUploadView(View):
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
             file_instance = form.save(commit=False)
-            file_instance.user = request.user  # Set the user to the currently logged-in user
+            file_instance.user = request.user
+            file_instance.save_uploaded_file(request.FILES['file_content'])
+            file_instance.file_name = request.POST['file_name']
+            file_instance.description = request.POST['description']
             file_instance.save()
             return redirect('Data_page')
         else:
@@ -62,7 +65,7 @@ def Data_page(request):
 
 class FileDownloadView(View):
     def get(self, request, file_id):
-        file_object = get_object_or_404(Files, file_name=file_id, user=request.user.id)
+        file_object = get_object_or_404(Files, file_name=file_id, user=request.user)
         response = HttpResponse(file_object.file_content, content_type='application/octet-stream')
         response['Content-Disposition'] = f'attachment; filename="{file_object.file_name}"'
         return response

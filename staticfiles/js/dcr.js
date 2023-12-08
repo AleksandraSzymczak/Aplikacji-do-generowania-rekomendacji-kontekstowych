@@ -66,7 +66,7 @@ function callAjaxFunction() {
       type: "GET",
       dataType: "json",
       headers: {
-        "Authorization": "Bearer " + getJwtToken(),
+        //"Authorization": "Bearer " + getJwtToken(),
       },
       success: function (data) {
         resolve(data);
