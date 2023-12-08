@@ -8,7 +8,7 @@ class FilesAdminForm(forms.ModelForm):
         model = Files
         fields = '__all__'
 
-    file_content = forms.FileField()  # This is assuming you want to allow uploading a file
+    file_content = forms.FileField()
 
     def save(self, commit=True):
         instance = super().save(commit=False)

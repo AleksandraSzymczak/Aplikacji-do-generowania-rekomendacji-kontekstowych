@@ -6,7 +6,7 @@ from account.models import CustomUser
 class Files(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file_name = models.CharField(max_length=255)
-    file_content = models.BinaryField(editable=True)  # Ustawiamy editable na True
+    file_content = models.BinaryField(editable=True)
     FILE_CHOICES = (
         ("LOG", "log"),
         ("BINARY", "binary"),

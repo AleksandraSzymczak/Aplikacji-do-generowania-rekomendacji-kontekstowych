@@ -21,7 +21,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/mainpage/')  # Change this to your desired redirect path
+                return redirect('/mainpage/')
     else:
         form = AuthenticationForm()
 
@@ -40,7 +40,6 @@ def register2(request):
             user = form.save()
             login(request, user)
 
-            # Generate JWT token
             tokens = MyTokenObtainPairSerializer.get_token(user)
             tokens['access'] = str(tokens.access_token)
 

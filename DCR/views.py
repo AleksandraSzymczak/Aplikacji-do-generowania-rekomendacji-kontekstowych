@@ -26,7 +26,6 @@ def DCR_page(request):
     file_content = file_obj.file_content
     file_content_bytesio = io.BytesIO(file_content)
 
-    # Read the BytesIO object into a pandas DataFrame
     df = pd.read_csv(file_content_bytesio)
     context_var_list = df.columns[3:].values.tolist()
     return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list, 'file':file_param})

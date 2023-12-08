@@ -24,7 +24,6 @@ def prefiltering_page(request):
     file_content = file_obj.file_content
     file_content_bytesio = io.BytesIO(file_content)
 
-    # Read the BytesIO object into a pandas DataFrame
     df = pd.read_csv(file_content_bytesio)
     col = df.columns
     print(col)
@@ -46,14 +45,12 @@ def simulate_long_running_process(request, selected_file):
         file_content = file_obj.file_content
         file_content_bytesio = io.BytesIO(file_content)
 
-        # Read the BytesIO object into a pandas DataFrame
         data = pd.read_csv(file_content_bytesio)
         logger.info(data.columns)
         rc_prefiltering = Recommender(data)
         results = rc_prefiltering.perform_calculations()
         logger.info(results)
 
-        # Add any additional logic or response handling as needed
         return JsonResponse({'success': True, 'data': results})
     else:
         logger.warning("No uploaded files found for the current user.")

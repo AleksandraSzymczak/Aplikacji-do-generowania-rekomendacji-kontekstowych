@@ -40,10 +40,8 @@ def upload_file(request):
 def recommend(request):
     if request.method == 'POST':
         try:
-            # Get the raw JSON data from the request body
             data = json.loads(request.body.decode('utf-8'))
 
-            # Access the data using the keys
             selected_algorithm = data.get('algorithm', '')
             selected_files = data.get('selected_files', '')
 
@@ -59,7 +57,6 @@ def recommend(request):
                 return redirect('DCW_page')
 
         except json.JSONDecodeError:
-            # Handle JSON decoding error
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
     return render(request, 'MainPage/main.html')
