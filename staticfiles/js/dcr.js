@@ -40,8 +40,9 @@ function startProcess() {
   progressContainer.style.display = "block";
 
   logWindow.innerHTML += "Processing started...\n";
-  // Call the AJAX function and wait for it to complete
-  callAjaxFunction().then(function (data) {
+  var selectedFile = document.getElementById("fileCont").dataset.file;
+
+  callAjaxFunction(selectedFile).then(function (data) {
     var result = JSON.stringify(data);
     var parsedResult = JSON.parse(result);
     var resData = parsedResult.data;
@@ -59,15 +60,16 @@ function startProcess() {
   });
 }
 
-function callAjaxFunction() {
+function callAjaxFunction(selectedFile) {
   return new Promise(function (resolve, reject) {
     $.ajax({
-      url: "/prefiltering/Wyniki_prefiltering/simulate_long_running_process/",
+      url: `/mainpage/prefiltering/prefiltering_page/Wyniki_prefiltering/simulate_long_running_process/${selectedFile}/`,
       type: "GET",
       dataType: "json",
-      headers: {
+      data: { file: selectedFile }, 
+      //headers: {
         //"Authorization": "Bearer " + getJwtToken(),
-      },
+      //},
       success: function (data) {
         resolve(data);
       },

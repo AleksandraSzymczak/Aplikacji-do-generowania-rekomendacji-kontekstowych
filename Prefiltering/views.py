@@ -28,7 +28,7 @@ def prefiltering_page(request):
     df = pd.read_csv(file_content_bytesio)
     col = df.columns
     print(col)
-    return render(request, 'Prefiltering/prefiltering_page.html')
+    return render(request, 'Prefiltering/prefiltering_page.html', {"file": file_param})
 
 def Wyniki_prefiltering(request):
     if request.method == 'POST':
@@ -36,16 +36,18 @@ def Wyniki_prefiltering(request):
     return render(request, 'Prefiltering/prefiltering_results.html')
 
 
-@login_required
-def simulate_long_running_process(request):
-    logger.info("START")
-    logger.info(request)
-    current_user = request.user
-    ostatni_plik = Files.objects.filter(user=current_user).order_by('-uploaded_at').first()
 
-    if ostatni_plik:
-        file_path = ostatni_plik.file.path
-        data = pd.read_csv(file_path)
+def simulate_long_running_process(request, selected_file):
+    print(f"START processing file: {selected_file}")
+    logger.info(request)
+    file_obj = Files.objects.get(file_name=selected_file, user=request.user)
+
+    if file_obj:
+        file_content = file_obj.file_content
+        file_content_bytesio = io.BytesIO(file_content)
+
+        # Read the BytesIO object into a pandas DataFrame
+        data = pd.read_csv(file_content_bytesio)
         logger.info(data.columns)
         rc_prefiltering = Recommender(data)
         results = rc_prefiltering.perform_calculations()
