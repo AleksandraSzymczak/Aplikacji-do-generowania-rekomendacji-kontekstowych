@@ -1,7 +1,7 @@
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px; /* Adjust the gap between columns if needed */
+    gap: 20px;
 }
 
 .grid-item {
@@ -47,18 +47,15 @@ form {
     cursor: pointer;
   }
   
-  /* Dropdown button on hover & focus */
   .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
   }
   
-  /* The container <div> - needed to position the dropdown content */
   .dropdown {
     position: relative;
     display: inline-block;
   }
   
-  /* Dropdown Content (Hidden by Default) */
   .dropdown-content {
     display: none;
     position: absolute;
@@ -68,7 +65,6 @@ form {
     z-index: 1;
   }
   
-  /* Links inside the dropdown */
   .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -76,7 +72,6 @@ form {
     display: block;
   }
   
-  /* Change color of dropdown links on hover */
   .dropdown-content a:hover {background-color: #ddd;}
   .dropdown:hover .dropdown-content {
     display: block;
@@ -84,7 +79,7 @@ form {
 
 @media (max-width: 600px) {
   .grid-container {
-      grid-template-columns: 1fr; /* Jedna kolumna na małych ekranach */
+      grid-template-columns: 1fr;
   }
   
   .buttons-container-one,

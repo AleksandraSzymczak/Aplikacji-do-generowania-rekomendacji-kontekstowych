@@ -1,7 +1,7 @@
 .form-grid {
     display: grid;
-    grid-template-columns: auto 1fr;  /* Two columns with equal width */
-    gap: 20px;  /* Adjust the gap between columns as needed */
+    grid-template-columns: auto 1fr;
+    gap: 20px;
 }
 
 .choices-container {
