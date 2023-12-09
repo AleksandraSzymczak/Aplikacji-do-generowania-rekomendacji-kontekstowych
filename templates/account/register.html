@@ -45,7 +45,7 @@
         </div>
         <div id="password-error" class="error-message"></div>
         <div class="form-group">
-          <button type="submit">Register</button>
+          <button type="submit" id="submit-button">Register</button>
         </div>
       </form>
     </div>
@@ -54,6 +54,7 @@
         var password1 = document.getElementById("id_password1");
         var password2 = document.getElementById("id_password2");
         var errorMessage = document.getElementById("password-error");
+        var submitButton = document.getElementById("submit-button");
 
         function checkPasswords() {
           if (
@@ -63,12 +64,15 @@
           ) {
             if (password1.value !== password2.value) {
               errorMessage.textContent = "Passwords do not match.";
+              submitButton.disabled = true;
             } else {
               errorMessage.textContent = "";
+              submitButton.disabled = false;
             }
           } else {
             errorMessage.textContent =
               "Password should be at least 8 characters long and include at least one special character and one digit.";
+            submitButton.disabled = true;
           }
         }
 
