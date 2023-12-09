@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from MainPage.models import UploadedFile
 from .forms import UserChoicesForm
 from DataPage.models import Files
@@ -9,6 +9,8 @@ import logging
 from utils.recommendations import Recommender
 from django.http import JsonResponse
 import io
+from django.contrib.auth.decorators import login_required
+
 
 
 logging.basicConfig(filename="ItemSplit_run.log",
@@ -18,6 +20,8 @@ logging.basicConfig(filename="ItemSplit_run.log",
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
+@login_required
 def DCR_page(request):
     file_param = request.session.get('selected_files')
     print(file_param)
@@ -31,6 +35,7 @@ def DCR_page(request):
     return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list, 'file':file_param})
 
 
+@login_required
 def Wyniki(request):
     if request.method == 'POST':
         c1_choices_list = request.POST.getlist('c1_choices')
@@ -59,6 +64,7 @@ def Wyniki(request):
     return render(request, 'DCR/dcr_results.html', {'form': form, 'file': file_cont_value})
 
 
+@login_required
 def simulate_long_running_process(request):
     form_data = request.session.get('form_data', {})
     pierwszy_plik = UploadedFile.objects.first()

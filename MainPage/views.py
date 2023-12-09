@@ -40,6 +40,7 @@ def upload_file(request):
     return render(request, 'MainPage/main.html', {'form': form})
 
 
+@login_required
 def recommend(request):
     if request.method == 'POST':
         try:

@@ -38,12 +38,10 @@ if (selectedFiles.length > 0) {
     console.log("Token:", token);
     console.log("File IDs:", fileIds);
 
-    // Create a hidden anchor element to trigger file downloads
     var anchor = document.createElement('a');
     anchor.style.display = 'none';
     document.body.appendChild(anchor);
 
-    // Fetch files and trigger download
     fileIds.forEach(fileId => {
         fetch(`/data/download/${fileId}/`, {
             method: 'GET',
@@ -59,10 +57,9 @@ if (selectedFiles.length > 0) {
             return response.blob();
         })
         .then(blob => {
-            // Create a link element and trigger download
             var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `file_${fileId}.txt`; // Set the desired filename
+            a.download = `file_${fileId}.txt`;
             a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
@@ -97,11 +94,9 @@ function UploadFile(event) {
             return response.json();
         })
         .then(data => {
-            // Handle success
             console.log(data);
         })
         .catch(error => {
-            // Handle error
             console.error("There was a problem with the fetch operation:", error);
         });
 }

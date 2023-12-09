@@ -9,7 +9,7 @@ from django.http import HttpResponse
 import json
 
 
-#@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class FileUploadView(View):
     template_name = 'upload_file.html'
 
@@ -32,7 +32,7 @@ class FileUploadView(View):
             return JsonResponse({'success': False, 'errors': form.errors})
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='post')
 class FileDeleteView(View):
     def post(self, request):
         try:
@@ -63,12 +63,14 @@ def Data_page(request):
     return render(request, 'DataPage/data.html', {'pliki_dict': file_des_dict})
 
 
+@method_decorator(login_required, name='get')
 class FileDownloadView(View):
     def get(self, request, file_id):
         file_object = get_object_or_404(Files, file_name=file_id, user=request.user)
         response = HttpResponse(file_object.file_content, content_type='application/octet-stream')
         response['Content-Disposition'] = f'attachment; filename="{file_object.file_name}"'
         return response
+
 
 def transform(request):
     if request.method == 'POST':

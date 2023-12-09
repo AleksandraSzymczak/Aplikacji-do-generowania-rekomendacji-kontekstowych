@@ -38,12 +38,10 @@ if (selectedFiles.length > 0) {
     console.log("Token:", token);
     console.log("File IDs:", fileIds);
 
-    // Create a hidden anchor element to trigger file downloads
     var anchor = document.createElement('a');
     anchor.style.display = 'none';
     document.body.appendChild(anchor);
 
-    // Fetch files and trigger download
     fileIds.forEach(fileId => {
         fetch(`/data/download/${fileId}/`, {
             method: 'GET',
@@ -59,10 +57,9 @@ if (selectedFiles.length > 0) {
             return response.blob();
         })
         .then(blob => {
-            // Create a link element and trigger download
             var a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `file_${fileId}.txt`; // Set the desired filename
+            a.download = `file_${fileId}.txt`;
             a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
@@ -77,14 +74,29 @@ else {
     alert('Select at least one file to download.');
 }
 }
-function getFileDetails() {
-    var fileInput = document.getElementById('file_content');
-    var fileNameInput = document.getElementById('file_name');
+function UploadFile(event) {
+    event.preventDefault();
 
-    if (fileInput.files.length > 0) {
-        var fileName = fileInput.files[0].name;
+    var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    var formData = new FormData(document.querySelector('form'));
 
-        fileNameInput.value = fileName;
-    }
-    return true;
+    fetch("{% url 'upload_file' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": token,
+        },
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("There was a problem with the fetch operation:", error);
+        });
 }

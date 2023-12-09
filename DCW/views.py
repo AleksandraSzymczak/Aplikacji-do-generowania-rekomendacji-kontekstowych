@@ -9,6 +9,8 @@ from DataPage.models import Files
 from utils.recommendations import Recommender
 from django.http import JsonResponse
 import io
+from django.contrib.auth.decorators import login_required
+
 
 logging.basicConfig(filename="ItemSplit_run.log",
                     format='%(asctime)s %(message)s',
@@ -17,6 +19,8 @@ logging.basicConfig(filename="ItemSplit_run.log",
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
+@login_required
 def DCW_page(request):
     file_param = request.session.get('selected_files')
     print(file_param)
@@ -30,6 +34,7 @@ def DCW_page(request):
     return render(request, 'DCW/dcw_page.html', {'context_list': context_var_list, 'file':file_param})
 
 
+@login_required
 def Wyniki_DCW(request):
     if request.method == 'POST':
         weights_dict = request.POST.get('hidden_values', '{}')

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var submenu = submenuParent.querySelector('.submenu');
   
     submenuParent.addEventListener('click', function(event) {
-      event.stopPropagation(); // Prevent the click event from reaching the document and closing the submenu
+      event.stopPropagation();
       if (submenu.style.display === 'block') {
         submenu.style.display = 'none';
       } else {
@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   
-    // Close the submenu when clicking outside of it
     document.addEventListener('click', function() {
       submenu.style.display = 'none';
     });
