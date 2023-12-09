@@ -53,10 +53,6 @@ padding-right: 10%;
   background-color: #2980B9;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
 .dropdown-content {
   display: none;
