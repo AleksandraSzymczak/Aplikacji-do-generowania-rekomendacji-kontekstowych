@@ -9,7 +9,9 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from DataPage.views import Files
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from django.contrib import messages
+from .models import CustomUser
 
 
 def login_view(request):
@@ -26,6 +28,34 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'account/login.html', {'form': form})
+
+
+def signup_view(request):
+    return render(request, 'account/register.html')
+
+
+def registration_view(request):
+    if request.method == 'POST':
+        print(request.POST)
+        email_to_check = request.POST.get('email')
+        password = request.POST.get('password1')
+        username_to_check = request.POST.get('username')
+        if CustomUser.objects.filter(email=email_to_check).exists():
+            messages.error(request, 'This email is already registered. Please use a different email.')
+            return redirect('registration') 
+        
+        if CustomUser.objects.filter(username=username_to_check).exists():
+            messages.error(request, 'This Username is already registered. Please use a different username.')
+            return redirect('registration') 
+
+        new_user = CustomUser.objects.create_user(username=username_to_check, email=email_to_check, password=password)
+        user = authenticate(request, username=username_to_check, password=password)
+        if user:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'There was an error logging in. Please try again.')
+    return render(request, 'account/register.html')
 
 
 def logout_view(request):
