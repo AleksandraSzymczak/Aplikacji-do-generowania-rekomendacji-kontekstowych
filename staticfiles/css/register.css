@@ -72,6 +72,12 @@ body{
     background: linear-gradient(0deg, rgba(90,160,228,1) 0%, rgba(232,173,230,1) 100%);
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 @media (max-width: 584px) {
     .register-container{
         max-width: 100%;
