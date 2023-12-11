@@ -3,11 +3,11 @@ from MainPage.models import UploadedFile
 import pandas as pd
 import logging
 from django.http import JsonResponse
-from utils.recommendations import Recommender
 from DataPage.models import Files
 from django.contrib.auth.decorators import login_required
 import io
 from django.contrib.auth.decorators import login_required
+from utils.data_utils import handle_recommender
 
 
 logging.basicConfig(filename="ItemSplit_run.log",
@@ -52,10 +52,11 @@ def simulate_long_running_process(request, selected_file):
 
         data = pd.read_csv(file_content_bytesio)
         logger.info(data.columns)
-        rc_prefiltering = Recommender(data)
-        results = rc_prefiltering.perform_calculations()
+        #rc_prefiltering = Recommender(data)
+        results = handle_recommender(data)
         logger.info(results)
-
+        print("____________")
+        print(results)
         return JsonResponse({'success': True, 'data': results})
     else:
         logger.warning("No uploaded files found for the current user.")

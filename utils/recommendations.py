@@ -1,118 +1,97 @@
-
+from surprise import AlgoBase
+from surprise  import PredictionImpossible
 import numpy as np
-import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
-from utils.model_evaluations import calculate_mae,calculate_recall,calculate_rmse
+import heapq
+from surprise.prediction_algorithms.knns import SymmetricAlgo
 
 
-class Recommender():
-    def __init__(self, data, type = None, form_data={}) -> None:
-        self.USER_ID = data.columns[0]
-        self.ITEM_ID = data.columns[1]
-        self.RATING = data.columns[2]
+
+#In our formalism, contextual pre-filtering is achieved by applying contextual constraints
+#to C1 only.
+class Prefiltering(AlgoBase):
+    def __init__(self, data, k=40, min_k=1, sim_options={}, verbose=True, **kwargs):
+
+        SymmetricAlgo.__init__(self, sim_options=sim_options, verbose=verbose, **kwargs)
+
+        self.k = k
+        self.min_k = min_k
         self.data = data
-        self.type = type
-        self.form_data = form_data
+        self.columns_to_check = data.iloc[:, 2:].columns.tolist()
+        self.USER_COL, self.ITEM_COL, self.RATING = data.iloc[:, :3]
+        self.user_rows_to_check = data.iloc[:, 2:].columns.tolist()
+
+    #def map_user_data(data)
+    def fit(self, trainset):
+
+        SymmetricAlgo.fit(self, trainset)
+        self.sim = self.compute_similarities()
+        self.user_id_dict = trainset._raw2inner_id_users
+        self.item_id_dict = trainset._raw2inner_id_items
+        self.means = np.zeros(self.n_x)
+        for x, ratings in self.xr.items():
+            self.means[x] = np.mean([r for (_, r) in ratings])
+
+        self.data_temp = self.data.copy()
+        self.data_temp.loc[:, self.USER_COL] = self.data_temp[self.USER_COL].map(self.user_id_dict)
+        self.data_temp = self.data_temp.dropna(subset=[self.USER_COL])
+        self.data_temp.loc[:, self.USER_COL] = self.data_temp[self.USER_COL].astype(int)
+
+        self.data_temp.loc[:, self.ITEM_COL] = self.data_temp[self.ITEM_COL].map(self.item_id_dict)
+        self.data_temp = self.data_temp.dropna(subset=[self.ITEM_COL])
+        self.data_temp.loc[:, self.ITEM_COL] = self.data_temp[self.ITEM_COL].astype(object)
+        return self
 
 
-    def collaborative_filtering(self, user_item_matrix, userid_number_mapping, itemid_number_mapping):
-        user_means = user_item_matrix.mean(axis=1).to_frame(name='mean_values')
-
-        centered_matrix = pd.DataFrame(index=user_item_matrix.index, columns=user_item_matrix.columns)
-        centered_matrix = user_item_matrix.sub(user_means['mean_values'], axis=0)
-
-        user_similarity = cosine_similarity(centered_matrix)
-        
-        predicted_ratings = np.zeros_like(user_item_matrix, dtype=float)
-
-        for a in range(user_item_matrix.shape[0] - 1):
-            neighbors = np.where(user_similarity[a] > 0)[0]
-            
-            for i in range(user_item_matrix.shape[1] - 1):
-                if i in itemid_number_mapping.index:
-                    context_set = self.data[(self.data[self.ITEM_ID] == itemid_number_mapping.loc[i, self.ITEM_ID]) & (self.data[self.USER_ID] == userid_number_mapping.loc[a, self.USER_ID])]
-                    if not context_set.empty:
-                        context_set_subset = context_set.iloc[:, 2:]
-                        data_subset = self.data.iloc[:, 2:]
-                        matching_rows = pd.merge(context_set, self.data, left_on=context_set_subset.columns.tolist(), right_on=data_subset.columns.tolist(), how='inner', suffixes=('', '_suffix'))
-                        matching_rows = matching_rows[~((matching_rows[self.ITEM_ID] == context_set[self.ITEM_ID].iloc[0]) & (matching_rows[self.USER_ID] == context_set[self.USER_ID].iloc[0]))]
-
-                        unique_itemids = matching_rows[self.ITEM_ID].unique()
-                        index_itemids = matching_rows[matching_rows[self.ITEM_ID].isin(unique_itemids)].index
-                        unique_userids = matching_rows[self.USER_ID].unique()
-                        index_userids = matching_rows[matching_rows[self.USER_ID].isin(unique_userids)].index
-                        filtered_neighbors = np.intersect1d(neighbors, np.union1d(index_itemids, index_userids))
-
-                        numerator = np.sum(user_similarity[a, filtered_neighbors] * centered_matrix.iloc[filtered_neighbors, i])
-                        denominator = np.sum(user_similarity[a, filtered_neighbors])
-                        if denominator != 0:
-                            predicted_ratings[a, i] = user_means.iloc[a] + (numerator / (denominator))
-                    #else:
-                #else:
-        return predicted_ratings
+    def filter_users(self, group, user_row):
+        return (group[self.user_rows_to_check].eq(user_row[self.user_rows_to_check]).all(axis=1)).any()
 
 
-    def collaborative_filtering_relaxation(self, user_item_matrix, userid_number_mapping, itemid_number_mapping):
-        user_means = user_item_matrix.mean(axis=1).to_frame(name='mean_values')
+    def estimate(self, u, i):
 
-        centered_matrix = pd.DataFrame(index=user_item_matrix.index, columns=user_item_matrix.columns)
-        centered_matrix = user_item_matrix.sub(user_means['mean_values'], axis=0)
+        if not (self.trainset.knows_user(u) and self.trainset.knows_item(i)):
+            raise PredictionImpossible("User and/or item is unknown.")
 
-        user_similarity = cosine_similarity(centered_matrix)
-
-        predicted_ratings = np.zeros_like(user_item_matrix, dtype=float)
-
-        for a in range(user_item_matrix.shape[0] - 1):
-            neighbors = np.where(user_similarity[a] > 0)[0]
-            
-            for i in range(user_item_matrix.shape[1] - 1):
-                if i in itemid_number_mapping.index:
-                    context_set = self.data[(self.data[self.ITEM_ID] == itemid_number_mapping.loc[i, self.ITEM_ID]) & (self.data[self.USER_ID] == userid_number_mapping.loc[a, self.USER_ID])]
-                    if not context_set.empty:
-                        context_set_subset = context_set[self.form_data["c1_choices"]]
-                        data_subset = self.data[self.form_data["c1_choices"]]
-                        matching_rows = pd.merge(context_set, self.data, left_on=context_set_subset.columns.tolist(), right_on=data_subset.columns.tolist(), how='inner', suffixes=('', '_suffix'))
-                        matching_rows = matching_rows[~((matching_rows[self.ITEM_ID] == context_set[self.ITEM_ID].iloc[0]) & (matching_rows[self.USER_ID] == context_set[self.USER_ID].iloc[0]))]
-
-                        unique_itemids = matching_rows[self.ITEM_ID].unique()
-                        index_itemids = matching_rows[matching_rows[self.ITEM_ID].isin(unique_itemids)].index
-                        unique_userids = matching_rows[self.USER_ID].unique()
-                        index_userids = matching_rows[matching_rows[self.USER_ID].isin(unique_userids)].index
-                        filtered_neighbors = np.intersect1d(neighbors, np.union1d(index_itemids, index_userids))
-
-                        numerator = np.sum(user_similarity[a, filtered_neighbors] * centered_matrix.iloc[filtered_neighbors, i])
-                        denominator = np.sum(user_similarity[a, filtered_neighbors])
-                        if denominator != 0:
-                            predicted_ratings[a, i] = user_means.iloc[a] + (numerator / (denominator))
- 
-        return predicted_ratings
-
-
-    def perform_calculations(self):
-        user_item_matrix = self.data.pivot_table(index=self.USER_ID, columns=self.ITEM_ID, values=self.RATING, fill_value=0)
-        userid_number_mapping = pd.DataFrame(user_item_matrix.index, columns=[self.USER_ID])
-        itemid_number_mapping = pd.DataFrame(user_item_matrix.columns, columns=[self.ITEM_ID])
-        if self.type == "DCR":
-            predicted_ratings = self.collaborative_filtering_relaxation(
-            user_item_matrix, 
-            userid_number_mapping, 
-            itemid_number_mapping
-        )
+        x, y = u, i # u i lub i u
+        user_rows_to_check = self.data_temp[(
+            self.data_temp[self.USER_COL] == x) 
+            & (self.data_temp[self.ITEM_COL] == y)
+            ]
+        #print(self.data)
+        # Sprawdź, czy istnieją użytkownicy do sprawdzenia
+        if not user_rows_to_check.empty:
+            # Grupowanie i filtrowanie
+            similar_users = self.data_temp.groupby('User').filter(lambda x: self.filter_users(x, user_rows_to_check.iloc[0]))[self.USER_COL].to_list()
+            similar_users = list(set(similar_users))
+            self.yr = {key: [(x, r) for (x, r) in value if x in similar_users] for key, value in self.yr.items()}
+            # Wydrukuj wyniki
+            print(similar_users)
         else:
-            predicted_ratings = self.collaborative_filtering(
-                user_item_matrix, 
-                userid_number_mapping, 
-                itemid_number_mapping
-            )
-        predicted_ratings_df = pd.DataFrame(
-            predicted_ratings, 
-            index=user_item_matrix.index, 
-            columns=user_item_matrix.columns
-            )
+            print(f'Brak danych dla użytkownika {x} i przedmiotu {y}')
+        
+        
+        neighbors = [(x2, self.sim[x, x2], r) for (x2, r) in self.yr[y]]
+        k_neighbors = heapq.nlargest(self.k, neighbors, key=lambda t: t[1])
 
-        flat_user_item_matrix = user_item_matrix.values.flatten()
-        flat_predicted_matrix = predicted_ratings_df.values.flatten()
-        mae = calculate_mae(flat_user_item_matrix, flat_predicted_matrix)
-        rmse = calculate_rmse(flat_user_item_matrix, flat_predicted_matrix)
-        recall_result = calculate_recall(self.USER_ID, user_item_matrix, predicted_ratings_df)
-        return {"mae": mae, "rmse": rmse, "recall_result": recall_result}
+        est = self.means[x]
+
+        # compute weighted average
+        sum_sim = sum_ratings = actual_k = 0
+        for (nb, sim, r) in k_neighbors:
+            if sim > 0:
+                sum_sim += sim
+                sum_ratings += sim * (r - self.means[nb])
+                actual_k += 1
+
+        if actual_k < self.min_k:
+            sum_ratings = 0
+
+        try:
+            est += sum_ratings / sum_sim
+        except ZeroDivisionError:
+            pass  # return mean
+
+        details = {"actual_k": actual_k}
+        return est, details
+
+    
+#trzeba to samo co w KNNWithMeans ale neighbor selection ma byc filtrowane tylko

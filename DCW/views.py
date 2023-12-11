@@ -6,7 +6,7 @@ import pandas as pd
 import json
 import logging
 from DataPage.models import Files
-from utils.recommendations import Recommender
+#from utils.recommendations import Recommender
 from django.http import JsonResponse
 import io
 from django.contrib.auth.decorators import login_required

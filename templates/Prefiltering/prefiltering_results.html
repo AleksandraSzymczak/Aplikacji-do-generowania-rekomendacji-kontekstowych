@@ -22,11 +22,11 @@
               $("#loadingBar").html("Process completed.");
               var mae = data.data.mae;
               var rmse = data.data.rmse;
-              var recallResult = data.data.recall_result;
+              var mse = data.data.mse;
 
               $("#maeResult").text("MAE: " + mae);
               $("#rmseResult").text("RMSE: " + rmse);
-              $("#recallResult").text("Recall Result: " + recallResult);
+              $("#mseResult").text("MSE: " + mse);
             },
             error: function (error) {
               console.error(error);

@@ -6,7 +6,7 @@ from DataPage.models import Files
 import pandas as pd
 import json
 import logging
-from utils.recommendations import Recommender
+#from utils.recommendations import Recommender
 from django.http import JsonResponse
 import io
 from django.contrib.auth.decorators import login_required
@@ -71,8 +71,8 @@ def simulate_long_running_process(request):
     file_path = pierwszy_plik.get_file_path()
     data = pd.read_csv(file_path)
     logger.info(form_data)
-    rc_prefiltering = Recommender(data, type="DCR", form_data=form_data)
-    results = rc_prefiltering.perform_calculations()
-    logger.info(results)
+    #rc_prefiltering = Recommender(data, type="DCR", form_data=form_data)
+    #results = #rc_prefiltering.perform_calculations()
+    logger.info("results")
 
-    return JsonResponse({'result': 'success', 'data': results})
+    return JsonResponse({'result': 'success', 'data': "results"})

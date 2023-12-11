@@ -38,9 +38,9 @@ if (selectedFiles.length > 0) {
     console.log("Token:", token);
     console.log("File IDs:", fileIds);
 
-    var anchor = document.createElement('a');
-    anchor.style.display = 'none';
-    document.body.appendChild(anchor);
+    //var anchor = document.createElement('a');
+    //anchor.style.display = 'none';
+    //document.body.appendChild(anchor);
 
     fileIds.forEach(fileId => {
         fetch(`/data/download/${fileId}/`, {

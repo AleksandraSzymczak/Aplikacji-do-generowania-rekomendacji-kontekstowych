@@ -31,7 +31,7 @@ function startProcess() {
   var logWindow = document.getElementById("logWindow");
   var mae = document.getElementById("maeResult");
   var rmse = document.getElementById("rmseResult");
-  var recall = document.getElementById("recallResult");
+  var mse = document.getElementById("mseResult");
 
 
   progressBar.style.width = "0%";
@@ -46,14 +46,15 @@ function startProcess() {
     var result = JSON.stringify(data);
     var parsedResult = JSON.parse(result);
     var resData = parsedResult.data;
+    console.log(resData.mse)
     if ('mae' in resData) {
       mae.textContent = "MAE: " + resData.mae;
     }
     if ('rmse' in resData) {
       rmse.textContent = "RMSE: " + resData.rmse;
     }
-    if ('recall_result' in resData) {
-      recall.textContent = "Recall Result: " + resData.recall_result;
+    if ('mse' in resData) {
+      mse.textContent = "MSE: " + resData.mse;
     }
     reportContent.style.display = "block";
     logWindow.innerHTML += "Processing ended...\n";

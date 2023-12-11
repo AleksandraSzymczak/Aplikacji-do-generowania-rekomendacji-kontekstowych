@@ -58,27 +58,27 @@
   }
 
     
-    .submenu-parent {
-        position: relative;
-    }
-    
-    .submenu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-    background-color: #4ca5af;
-    padding: 10px;
-    }
+  .submenu-parent {
+      position: relative;
+  }
+  
+  .submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #4ca5af;
+  padding: 10px;
+  }
 
-    .submenu li{
-    padding: 7px 13px;
-    }
+  .submenu li{
+  padding: 7px 13px;
+  }
 
-    .submenu li a, .submenu li a:hover {
-    color: #aac4c6;
-    transition: 0.5s;
-    }
+  .submenu li a, .submenu li a:hover {
+  color: #aac4c6;
+  transition: 0.5s;
+  }
 
   @media (max-width: 980px) {
     label.logo{
@@ -134,5 +134,4 @@
     #check:checked ~ ul{
       left: 0;
     }
-    
   }
