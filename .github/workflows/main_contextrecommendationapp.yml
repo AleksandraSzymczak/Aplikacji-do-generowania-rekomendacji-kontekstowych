@@ -27,8 +27,6 @@ jobs:
         run: |
           source venv/bin/activate
           pip install --upgrade pip
-          pip install wheel
-          pip install numpy
           pip install scikit-surprise==1.1.1
           pip install --use-pep517 -r requirements.txt
 
