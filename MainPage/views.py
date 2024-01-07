@@ -52,13 +52,13 @@ def recommend(request):
             print(f'Selected Algorithm: {selected_algorithm}, Selected Files: {selected_files}')
 
             request.session['selected_files'] = selected_files
-            if selected_algorithm == 'Prefiltering':
-                print("jestem")
-                return redirect('prefiltering_page')
+            print(selected_algorithm)
+            if selected_algorithm == 'collaborative_filtering':
+                return redirect('collaborative_filtering_page')
+            elif selected_algorithm == 'exact_prefiltering':
+                return redirect('exact_prefiltering')
             elif selected_algorithm == 'DCR':
-                return redirect('DCR_page')
-            elif selected_algorithm == 'DCW':
-                return redirect('DCW_page')
+                return redirect('context_relaxation')
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PrefilteringConfig(AppConfig):
+class Collaborative_filteringConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "Prefiltering"
+    name = "Collaborative_filtering"

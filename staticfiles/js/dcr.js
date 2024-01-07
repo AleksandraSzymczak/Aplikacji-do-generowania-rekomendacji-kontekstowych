@@ -64,7 +64,7 @@ function startProcess() {
 function callAjaxFunction(selectedFile) {
   return new Promise(function (resolve, reject) {
     $.ajax({
-      url: `/mainpage/prefiltering/prefiltering_page/Wyniki_prefiltering/simulate_long_running_process/${selectedFile}/`,
+      url: `/mainpage/collaborative_filtering/collaborative_filtering_page/Wyniki_collaborative_filtering/simulate_long_running_process/${selectedFile}/`,
       type: "GET",
       dataType: "json",
       data: { file: selectedFile }, 

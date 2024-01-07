@@ -4,20 +4,19 @@ function handleAlgorithmSelection(selectedAlgorithm, selectedFiles) {
     
     console.log(selectedAlgorithm);
     console.log(selectedFiles);
-    if(selectedAlgorithm == "Prefiltering"){
-        var redirect_url = "prefiltering/prefiltering_page/"
+    if(selectedAlgorithm == "collaborative_filtering"){
+        var redirect_url = "collaborative_filtering/collaborative_filtering_page/"
+    }
+    if(selectedAlgorithm == "exact_prefiltering"){
+        var redirect_url = "exact_prefiltering/exact_prefiltering_page/"
     }
     if(selectedAlgorithm == "DCR"){
         var redirect_url = "DCR/DCR_page/"
-    }
-    if(selectedAlgorithm == "DCW"){
-        var redirect_url = "DCW/DCW_page/"
     }
     fetch('wybor_algorytmu/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            //'Authorization': 'Bearer ' + token,
             'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({

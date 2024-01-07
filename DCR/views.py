@@ -32,7 +32,8 @@ def DCR_page(request):
 
     df = pd.read_csv(file_content_bytesio)
     context_var_list = df.columns[3:].values.tolist()
-    return render(request, 'DCR/dcr_page.html', {'context_list': context_var_list, 'file':file_param})
+    result = list(set([feature.split(":")[0] for feature in context_var_list]))
+    return render(request, 'DCR/dcr_page.html', {'context_list': result, 'file':file_param})
 
 
 @login_required

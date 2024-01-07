@@ -8,8 +8,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 urlpatterns = [
     path('', register, name='register'),
-    #path('mainpage/', HomeView.as_view(), name='home'),
-    path('mainpage/prefiltering/', include('Prefiltering.urls')),
+    path('mainpage/collaborative_filtering/', include('Collaborative_filtering.urls')),
     path('mainpage/DCR/', include('DCR.urls')),
     path('mainpage/DCW/', include('DCW.urls')),
     path('mainpage/', HomeView.as_view(), name='home'),

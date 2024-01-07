@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('MainPage.urls')),
     path('api/', include('account.urls')),
     path('data/', include('DataPage.urls')),
-    path('docs/', include('Docs.urls'))
+    path('docs/', include('Docs.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

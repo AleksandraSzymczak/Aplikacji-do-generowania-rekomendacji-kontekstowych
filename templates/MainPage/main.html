@@ -34,12 +34,25 @@
               <li>
                 <input
                   type="radio"
-                  id="prefiltering"
+                  id="collaborative_filtering"
                   name="algorithm"
-                  value="Prefiltering"
+                  value="collaborative_filtering"
                 />
-                <label for="prefiltering" title="Hint for Prefiltering"
-                  >Prefiltering</label
+                <label for="collaborative_filtering" title="Hint for Prefiltering"
+                  >Collaborative filtering</label
+                >
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="exact_prefiltering"
+                  name="algorithm"
+                  value="exact_prefiltering"
+                />
+                <label
+                  for="exact_prefiltering"
+                  title="Hint for Differential context weighting"
+                  >Exact prefiltering</label
                 >
               </li>
               <li>
@@ -53,19 +66,6 @@
                   for="context_relaxation"
                   title="Hint for Differential Context Relaxation"
                   >Differential Context Relaxation</label
-                >
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="context_weighting"
-                  name="algorithm"
-                  value="DCW"
-                />
-                <label
-                  for="context_weighting"
-                  title="Hint for Differential context weighting"
-                  >Differential context weighting</label
                 >
               </li>
             </ul>
