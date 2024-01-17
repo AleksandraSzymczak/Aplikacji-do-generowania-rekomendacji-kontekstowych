@@ -95,7 +95,7 @@ function startLogUpdates() {
   var logWindow = document.getElementById("logWindow");
 
   // Tworzymy nowy obiekt EventSource do nasłuchiwania na zmiany w pliku log.txt
-  const eventSource = new EventSource(`/mainpage/collaborative_filtering_page/collaborative_filtering_page_page/Wyniki_collaborative_filtering/log-stream/`);
+  const eventSource = new EventSource(`/mainpage/collaborative_filtering/collaborative_filtering_page/Wyniki_collaborative_filtering/log-stream/`);
 
   // Obsługa zdarzenia (nowa linia w logu)
   eventSource.onmessage = function (event) {

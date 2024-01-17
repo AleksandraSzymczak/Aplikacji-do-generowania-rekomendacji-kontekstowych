@@ -112,9 +112,7 @@ def simulate_long_running_process(request, selected_file):
             "mse": []
         }
         for trainset, testset in kf.split(data):
-            # train and test algorithm.
             algo.fit(trainset)
-            #print(trainset.__dict__)
             predictions = algo.test(testset)
             results["rmse"].append(accuracy.rmse(predictions, verbose=True))
             results["mae"].append(accuracy.mae(predictions, verbose=True))

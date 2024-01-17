@@ -28,8 +28,6 @@ SECRET_KEY = "django-insecure-on1hn1%sqna31$@a1+xce_=eky@+w75wpw7#nk*^vqrz9g86(7
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,12 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "MainPage",
-    "Prefiltering",
+    "Collaborative_filtering",
     "DCR",
     "DCW",
     "DataPage",
     "account",
     "Docs",
+    "websocket_app",
+    "channels",
     'corsheaders'
 ]
 
