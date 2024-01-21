@@ -37,6 +37,8 @@ jobs:
       - name: Delete Old Artifacts
         uses: actions/github-script@v6
         id: artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_INZ }}
         with:
           script: |
             try {
