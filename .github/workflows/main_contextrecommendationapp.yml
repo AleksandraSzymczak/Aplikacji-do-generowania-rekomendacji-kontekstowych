@@ -34,27 +34,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
-      - name: Delete Old Artifacts
-        id: artifact
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const res = await github.rest.actions.listArtifactsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
-            res.data.artifacts.forEach(async ({ id }) => {
-              try {
-                await github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: id,
-                })
-                console.log(`Artifact with ID ${id} deleted successfully.`);
-              } catch (error) {
-                console.error(`Error deleting artifact with ID ${id}: ${error.message}`);
-              }
-            });
+    
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
