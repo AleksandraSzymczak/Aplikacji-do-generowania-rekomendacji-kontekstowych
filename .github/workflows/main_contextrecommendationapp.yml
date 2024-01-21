@@ -39,19 +39,28 @@ jobs:
         id: artifact
         with:
           script: |
-            const res = await github.rest.actions.listArtifactsForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
-    
-            res.data.artifacts
-              .forEach(({ id }) => {
-                github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: id,
-                })
+            try {
+              const res = await github.rest.actions.listArtifactsForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
               })
+
+              res.data.artifacts.forEach(async ({ id }) => {
+                try {
+                  await github.rest.actions.deleteArtifact({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    artifact_id: id,
+                  })
+                  console.log(`Artifact with ID ${id} deleted successfully.`);
+                } catch (error) {
+                  console.error(`Error deleting artifact with ID ${id}: ${error.message}`);
+                }
+              });
+            } catch (error) {
+              console.error(`Error listing artifacts: ${error.message}`);
+              throw error;
+            }
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
