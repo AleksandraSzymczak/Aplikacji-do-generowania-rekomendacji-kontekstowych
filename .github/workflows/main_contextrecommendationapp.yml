@@ -39,14 +39,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const res = await github.rest.actions.listArtifactsForRepo({
+            const readToken = process.env.REPO_INZ;
+            const readGitHub = new github.GitHub(readToken);
+
+            const res = await readGitHub.rest.actions.listArtifactsForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-      
             res.data.artifacts.forEach(async ({ id }) => {
               try {
-                await github.rest.actions.deleteArtifact({
+                await writeGitHub.rest.actions.deleteArtifact({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   artifact_id: id,
@@ -56,8 +58,6 @@ jobs:
                 console.error(`Error deleting artifact with ID ${id}: ${error.message}`);
               }
             });
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_INZ }}
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
