@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "DataPage",
     "account",
     "Docs",
-    "websocket_app",
-    "channels",
+    #"websocket_app",
+    #"channels",
     'corsheaders'
 ]
 
