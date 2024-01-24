@@ -20,7 +20,10 @@ jobs:
 
       - name: Create and start virtual environment
         run: python -m venv antenv
-
+        
+      - name: Activate virtual environment
+        run: source antenv/bin/activate
+      
       - name: Install dependencies
         run: |
           pip install --upgrade pip
